@@ -559,8 +559,19 @@ end
   try {
     result = rubyVM.eval(wrapped).toString();
   } catch (e) {
-    setOutput(`<span style="color:#f87171;">執行錯誤: ${escHtml(e.message)}</span>`);
-    return;
+    // iOS Safari: "Maximum call stack size exceeded" — retry after a macrotask break
+    if (e instanceof RangeError || e.message?.includes('call stack')) {
+      try {
+        await new Promise(r => setTimeout(r, 50));
+        result = rubyVM.eval(wrapped).toString();
+      } catch (e2) {
+        setOutput(`<span style="color:#f87171;">執行錯誤: ${escHtml(e2.message)}</span>`);
+        return;
+      }
+    } else {
+      setOutput(`<span style="color:#f87171;">執行錯誤: ${escHtml(e.message)}</span>`);
+      return;
+    }
   }
 
   const isError = result.includes('Error:') || result.includes('SyntaxError');
@@ -817,6 +828,9 @@ async function initRuby() {
     const { vm }   = await DefaultRubyVM(module);
 
     rubyVM = vm;
+    // Warm-up: pre-load stringio to avoid deep call stack on first eval
+    // (workaround for iOS Safari 18.x "Maximum call stack size exceeded")
+    try { rubyVM.eval('require "stringio"; require "strscan"'); } catch(_) {}
     statusEl.textContent = '✅ Ruby 4.0 就緒';
     statusEl.style.color = '#16a34a';
     document.getElementById('run-btn').style.opacity = '1';
