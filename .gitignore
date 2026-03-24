@@ -4,3 +4,8 @@ _site
 .jekyll-metadata
 vendor
 /**/*/CLAUDE.md
+_config.local.yml
+.DS_Store
+/**/*/.DS_Store
+prev-event-data/
+package/

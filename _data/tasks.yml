@@ -1,0 +1,199 @@
+# ── Ruby 互動挑戰題庫 ─────────────────────────────────────
+#
+# secret_type 說明：
+#   integer      — 從 secret_range: [min, max] 隨機取整數
+#   odd_integer  — 從 secret_range: [min, max] 隨機取奇數
+#   string       — 從 secret_pool 隨機取字串
+#   array        — 生成 array_length 個整數，範圍 element_range: [min, max]
+#
+# answer  — 正確 Ruby 方法（含前面的點，例如 ".next"）
+# difficulty — easy | medium | hard
+# ─────────────────────────────────────────────────────────
+
+# ── Easy ─────────────────────────────────────────────────
+
+- category: 數字操作
+  difficulty: easy
+  secret_type: integer
+  secret_range: [10, 99]
+  question: "讓 secret 變成下一個數字（{secret} + 1）"
+  answer: ".next"
+  tips:
+    - { code: "42.next",  desc: "整數的下一個值" }
+    - { code: "42.pred",  desc: "整數的前一個值" }
+    - { code: "42.to_f",  desc: "轉成浮點數" }
+    - { code: "42.even?", desc: "是偶數嗎？" }
+
+- category: 字串操作
+  difficulty: easy
+  secret_type: string
+  secret_pool: [hello, ruby, sitcon, taiwan, code, wasm]
+  question: "讓 secret 全部轉成大寫"
+  answer: ".upcase"
+  tips:
+    - { code: '"hello".upcase',   desc: "全部轉大寫" }
+    - { code: '"HELLO".downcase', desc: "全部轉小寫" }
+    - { code: '"hello".reverse',  desc: "字串反轉" }
+    - { code: '"hello".length',   desc: "字串長度" }
+
+- category: 字串操作
+  difficulty: easy
+  secret_type: string
+  secret_pool: [ruby, sitcon, taiwan, hello, wasm]
+  question: "讓 secret 反轉字串"
+  answer: ".reverse"
+  tips:
+    - { code: '"hello".reverse', desc: "字串反轉" }
+    - { code: '"hello".upcase',  desc: "全部轉大寫" }
+    - { code: '"hello".chars',   desc: "拆成字元陣列" }
+    - { code: '"hello".length',  desc: "字串長度" }
+
+- category: 陣列操作
+  difficulty: easy
+  secret_type: array
+  array_length: 4
+  element_range: [1, 9]
+  question: "計算 secret 陣列的元素總和"
+  answer: ".sum"
+  tips:
+    - { code: "[1,2,3].sum",  desc: "元素總和" }
+    - { code: "[1,2,3].min",  desc: "最小值" }
+    - { code: "[1,2,3].max",  desc: "最大值" }
+    - { code: "[1,2,3].sort", desc: "排序" }
+
+- category: 字串操作
+  difficulty: easy
+  secret_type: string
+  secret_pool: [ruby, sitcon, taiwan, hello, open, source]
+  question: "讓 secret 第一個字母大寫，其餘小寫"
+  answer: ".capitalize"
+  tips:
+    - { code: '"hello".capitalize', desc: "首字大寫" }
+    - { code: '"hello".upcase',     desc: "全部大寫" }
+    - { code: '"HELLO".downcase',   desc: "全部小寫" }
+    - { code: '"hello".swapcase',   desc: "大小寫互換" }
+
+# ── Medium ────────────────────────────────────────────────
+
+- category: 型別探索
+  difficulty: medium
+  secret_type: integer
+  secret_range: [1, 100]
+  question: "secret 的型別（class）是什麼？（提示：用 .class 方法）"
+  answer: ".class"
+  tips:
+    - { code: '"hello".class', desc: "→ String" }
+    - { code: "42.class",      desc: "→ Integer" }
+    - { code: "[1,2].class",   desc: "→ Array" }
+    - { code: "true.class",    desc: "→ TrueClass" }
+
+- category: 型別探索
+  difficulty: medium
+  secret_type: string
+  secret_pool: ["42", "99", "7", "256"]
+  question: "把字串 secret 轉成整數"
+  answer: ".to_i"
+  tips:
+    - { code: '"42".to_i',   desc: "字串轉整數" }
+    - { code: '"3.14".to_f', desc: "字串轉浮點數" }
+    - { code: "42.to_s",     desc: "整數轉字串" }
+    - { code: "42.to_f",     desc: "整數轉浮點數" }
+
+- category: 字串操作
+  difficulty: medium
+  secret_type: string
+  secret_pool: ["  hello  ", "  ruby  ", "  sitcon  "]
+  question: "去除 secret 前後的空白"
+  answer: ".strip"
+  tips:
+    - { code: '"  hi  ".strip',  desc: "去前後空白" }
+    - { code: '"  hi  ".lstrip', desc: "去左邊空白" }
+    - { code: '"  hi  ".rstrip', desc: "去右邊空白" }
+    - { code: '"hello".center(11)', desc: "置中填充" }
+
+- category: 字串操作
+  difficulty: medium
+  secret_type: string
+  secret_pool: [ruby, sitcon, taiwan, hello, world]
+  question: "secret 有幾個字元？"
+  answer: ".length"
+  tips:
+    - { code: '"hello".length', desc: "字串長度" }
+    - { code: '"hello".size',   desc: "同 length" }
+    - { code: '[1,2,3].length', desc: "陣列長度" }
+
+- category: 陣列操作
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 20]
+  question: "取出 secret 陣列的最大值"
+  answer: ".max"
+  tips:
+    - { code: "[1,2,3].max",  desc: "最大值" }
+    - { code: "[1,2,3].min",  desc: "最小值" }
+    - { code: "[1,2,3].sum",  desc: "總和" }
+    - { code: "[1,2,3].sort", desc: "排序" }
+
+- category: 陣列操作
+  difficulty: medium
+  secret_type: array
+  array_length: 6
+  element_range: [1, 10]
+  question: "取出 secret 陣列的第一個元素"
+  answer: ".first"
+  tips:
+    - { code: "[1,2,3].first", desc: "第一個元素" }
+    - { code: "[1,2,3].last",  desc: "最後一個元素" }
+    - { code: "[1,2,3][0]",    desc: "用索引取值（從 0 開始）" }
+    - { code: "[1,2,3].min",   desc: "最小值" }
+
+- category: 數字操作
+  difficulty: medium
+  secret_type: integer
+  secret_range: [2, 50]
+  question: "讓 secret 乘以 2（試試用運算子！）"
+  answer: "* 2"
+  tips:
+    - { code: "5 * 2",  desc: "乘法" }
+    - { code: "5 ** 2", desc: "次方" }
+    - { code: "10 / 2", desc: "除法" }
+    - { code: "10 % 3", desc: "取餘數" }
+
+# ── Hard ──────────────────────────────────────────────────
+
+- category: 布林判斷
+  difficulty: hard
+  secret_type: odd_integer
+  secret_range: [1, 89]
+  question: "secret 是奇數嗎？（回傳 true 或 false）"
+  answer: ".odd?"
+  tips:
+    - { code: "7.odd?",      desc: "是奇數嗎？" }
+    - { code: "7.even?",     desc: "是偶數嗎？" }
+    - { code: "7.zero?",     desc: "是零嗎？" }
+    - { code: "7.positive?", desc: "是正數嗎？" }
+
+- category: 字串操作
+  difficulty: hard
+  secret_type: string
+  secret_pool: [Hello, RUBY, sItCoN, TaIwAn]
+  question: "把 secret 的大小寫全部互換（大→小，小→大）"
+  answer: ".swapcase"
+  tips:
+    - { code: '"Hello".swapcase',   desc: "大小寫互換" }
+    - { code: '"Hello".upcase',     desc: "全部大寫" }
+    - { code: '"Hello".downcase',   desc: "全部小寫" }
+    - { code: '"hello".capitalize', desc: "首字大寫" }
+
+- category: 型別探索
+  difficulty: hard
+  secret_type: string
+  secret_pool: [hello, ruby, frozen, sitcon]
+  question: "secret 是否被凍結？（Ruby 字串預設是可變動的，不會自動 freeze）"
+  answer: ".frozen?"
+  tips:
+    - { code: '"hello".frozen?',        desc: "字串預設 → false" }
+    - { code: '"hello".freeze.frozen?', desc: "freeze 後 → true" }
+    - { code: ':symbol.frozen?',        desc: "Symbol 永遠是 frozen" }
+    - { code: '"hello".dup.frozen?',    desc: "dup 複製出的也是 false" }

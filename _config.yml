@@ -18,7 +18,15 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Your awesome title
+title: Ruby 互動煉金術 | SITCON 2026
+
+# listmonk 訂閱設定
+listmonk_list_uuid: "591bfadd-f32c-495c-b6db-e3cf561a4e03"
+listmonk_submit_url: "https://edm.ruby.tw/api/public/subscription"
+
+webrick:
+  mime_types:
+    application/wasm: [wasm]
 email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
