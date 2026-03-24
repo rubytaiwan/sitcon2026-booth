@@ -22,7 +22,7 @@ title: Ruby 互動煉金術 | SITCON 2026
 
 # listmonk 訂閱設定
 listmonk_list_uuid: "591bfadd-f32c-495c-b6db-e3cf561a4e03"
-listmonk_submit_url: "https://edm.ruby.tw/api/public/subscription"
+listmonk_submit_url: "https://sitcon2026-subscribe.contact-db4.workers.dev"
 
 webrick:
   mime_types:
