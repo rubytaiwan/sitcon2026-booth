@@ -604,12 +604,11 @@ puts secret.???   # ??? 是我需要填入的 Ruby 方法
 
 請先問我對這題的初步想法，再視情況給漸進式提示，最後確認我真的理解了再給答案。`;
 
-  try { navigator.clipboard.writeText(prompt); } catch (_) {}
-  window.open('https://claude.ai/new', '_blank');
+  window.open('https://claude.ai/new?q=' + encodeURIComponent(prompt), '_blank');
 
   const btn = document.getElementById('ask-ai-btn');
   const orig = btn.innerHTML;
-  btn.innerHTML = '✅ 已複製，請貼上';
+  btn.innerHTML = '✅ 開啟中…';
   btn.style.color = '#16a34a'; btn.style.borderColor = '#16a34a';
   setTimeout(() => { btn.innerHTML = orig; btn.style.color = '#6d28d9'; btn.style.borderColor = '#7c3aed'; }, 2000);
 };
