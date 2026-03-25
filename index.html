@@ -296,6 +296,7 @@ const LISTMONK_LIST_UUID = '{{ site.listmonk_list_uuid }}';
 const TASK_DEFS = {{ site.data.tasks | jsonify }};
 
 // ── answer → JS 計算函數映射（不用 eval）───────────────────
+// 注意：puts 對陣列的輸出是每個元素各自一行（\n 分隔），不是 [a, b, c] 格式
 const EXPECTED_MAP = {
   '.next':       (v) => String(Number(v) + 1),
   '.pred':       (v) => String(Number(v) - 1),
@@ -305,9 +306,9 @@ const EXPECTED_MAP = {
   '.to_s':       (v) => String(v),
   '.upcase':     (v) => v.toUpperCase(),
   '.downcase':   (v) => v.toLowerCase(),
-  '.reverse':    (v) => Array.isArray(v) ? v.slice().reverse().join(', ') : v.split('').reverse().join(''),
-  '.length':     (v) => String(v.length),
-  '.size':       (v) => String(v.length),
+  '.reverse':    (v) => Array.isArray(v) ? v.slice().reverse().join('\n') : v.split('').reverse().join(''),
+  '.length':     (v) => String(Array.isArray(v) ? v.length : String(v).length),
+  '.size':       (v) => String(Array.isArray(v) ? v.length : String(v).length),
   '.capitalize': (v) => v.charAt(0).toUpperCase() + v.slice(1).toLowerCase(),
   '.swapcase':   (v) => v.split('').map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join(''),
   '.strip':      (v) => v.trim(),
@@ -318,8 +319,8 @@ const EXPECTED_MAP = {
   '.max':        (v) => String(Math.max(...v)),
   '.first':      (v) => String(v[0]),
   '.last':       (v) => String(v[v.length - 1]),
-  '.sort':       (v) => '[' + v.slice().sort((a, b) => a - b).join(', ') + ']',
-  '.uniq':       (v) => '[' + [...new Set(v)].join(', ') + ']',
+  '.sort':       (v) => v.slice().sort((a, b) => a - b).join('\n'),
+  '.uniq':       (v) => [...new Set(v)].join('\n'),
   '.count':      (v) => String(v.length),
   '.odd?':       (v) => String(Number(v) % 2 !== 0),
   '.even?':      (v) => String(Number(v) % 2 === 0),
@@ -330,6 +331,21 @@ const EXPECTED_MAP = {
   '.frozen?':    (_) => 'false',
   '.class':      (v) => Array.isArray(v) ? 'Array' : typeof v === 'number' ? 'Integer' : 'String',
   '* 2':         (v) => String(Number(v) * 2),
+  // ── 新增（tasks.yml 更新後需要）──────────────────────────
+  '.pop':        (v) => String(v[v.length - 1]),
+  '.shift':      (v) => String(v[0]),
+  '.chars':      (v) => v.split('').join('\n'),
+  '.empty?':     (v) => String((Array.isArray(v) ? v.length : String(v).length) === 0),
+  '.freeze':     (v) => String(v),
+  '.dup':        (v) => String(v),
+  '.to_sym':     (v) => String(v),
+  '.rotate':     (v) => [...v.slice(1), v[0]].join('\n'),
+  '.inspect':    (v) => {
+    if (Array.isArray(v)) return '[' + v.map(x => typeof x === 'string' ? '"' + x + '"' : x).join(', ') + ']';
+    if (typeof v === 'number') return String(v);
+    return '"' + v + '"';
+  },
+  '.flatten':    (v) => Array.isArray(v) ? v.flat(Infinity).join('\n') : String(v),
 };
 
 // ── secret 生成 ──────────────────────────────────────────
@@ -354,8 +370,19 @@ function generateSecret(def) {
       return Array.from({ length: def.array_length },
         () => Math.floor(Math.random() * (eMax - eMin + 1)) + eMin);
     }
+    case 'nested_array': {
+      const pool = def.secret_pool;
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
     default: return 0;
   }
+}
+
+// ── Ruby literal 轉換（支援巢狀陣列）────────────────────
+function toRubyLit(v) {
+  if (Array.isArray(v)) return '[' + v.map(toRubyLit).join(', ') + ']';
+  if (typeof v === 'string') return `"${v}"`;
+  return String(v);
 }
 
 // ── 題目工廠函數 ─────────────────────────────────────────
@@ -364,14 +391,23 @@ function generateTaskFromDef(def) {
   const isArray  = Array.isArray(raw);
   const isString = def.secret_type === 'string';
 
-  const rubyLiteral = isArray
-    ? `[${raw.join(', ')}]`
-    : isString ? `"${raw}"` : String(raw);
-
-  const displayVal = isArray ? `[${raw.join(', ')}]` : String(raw);
+  const rubyLiteral = isArray ? toRubyLit(raw) : isString ? `"${raw}"` : String(raw);
+  const displayVal  = isArray ? toRubyLit(raw) : String(raw);
 
   const fn = EXPECTED_MAP[def.answer];
   const expected = fn ? fn(raw) : '???';
+
+  // .shuffle / .sample 結果不固定，用 validator 函數取代字串比對
+  let validator = null;
+  if (def.answer === '.shuffle') {
+    const origSorted = raw.slice().sort((a, b) => a - b).join('\n');
+    validator = (result) => {
+      const resSorted = result.trim().split('\n').map(Number).sort((a, b) => a - b).join('\n');
+      return resSorted === origSorted;
+    };
+  } else if (def.answer === '.sample') {
+    validator = (result) => raw.map(String).includes(result.trim());
+  }
 
   return {
     category:    def.category,
@@ -383,6 +419,7 @@ function generateTaskFromDef(def) {
     answer:      def.answer,
     rubyCode:    (input) => `secret = ${rubyLiteral}\nputs secret${input}`,
     tips:        def.tips,
+    validator,
   };
 }
 
@@ -582,7 +619,7 @@ end
 
   setOutput(`<span style="color:#4ade80;">=&gt; ${escHtml(result)}</span>`);
 
-  if (result.trim() === q.expected.trim()) {
+  if (q.validator ? q.validator(result) : result.trim() === q.expected.trim()) {
     correctCount++;
     document.getElementById('score-text').textContent = `⭐ ${correctCount} 題答對`;
     showCorrectFeedback();
