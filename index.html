@@ -209,6 +209,17 @@ title: Ruby 互動煉金術 | SITCON 2026
               onfocus="this.style.borderColor='#bd3f32'" onblur="this.style.borderColor='#e8d5d3'"
             >
           </div>
+          <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13px; color: #555;">
+            <input id="form-ruby-course" type="checkbox" style="width: 16px; height: 16px; accent-color: #bd3f32; margin-top: 1px; flex-shrink: 0;">
+            你所屬的科系或社團對免費的 Ruby 課程有興趣嗎？
+          </label>
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #323232; display: block; margin-bottom: 6px;">其它想對我們說的話</label>
+            <textarea id="form-message" placeholder="歡迎留言（選填）" rows="3"
+              style="width: 100%; box-sizing: border-box; border: 1px solid #e8d5d3; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: Montserrat, sans-serif; outline: none; resize: vertical;"
+              onfocus="this.style.borderColor='#bd3f32'" onblur="this.style.borderColor='#e8d5d3'"
+            ></textarea>
+          </div>
           <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: #555;">
             <input id="form-subscribe" type="checkbox" checked style="width: 16px; height: 16px; accent-color: #bd3f32;">
             訂閱 Ruby Taiwan 電子報，獲得最新活動資訊
@@ -774,9 +785,11 @@ window.downloadCanvas = function () {
 window.submitForm = async function () {
   const name   = document.getElementById('form-name').value.trim();
   const email  = document.getElementById('form-email').value.trim();
-  const phone  = document.getElementById('form-phone').value.trim();
-  const school = document.getElementById('form-school').value.trim();
-  const sub    = document.getElementById('form-subscribe').checked;
+  const phone      = document.getElementById('form-phone').value.trim();
+  const school     = document.getElementById('form-school').value.trim();
+  const rubyCourse = document.getElementById('form-ruby-course').checked;
+  const message    = document.getElementById('form-message').value.trim();
+  const sub        = document.getElementById('form-subscribe').checked;
 
   if (!name || !email) {
     alert('請填寫暱稱和 Email');
@@ -798,7 +811,7 @@ window.submitForm = async function () {
           email,
           name,
           list_uuids: [LISTMONK_LIST_UUID],
-          attribs: { phone, school, score: correctCount, total: TOTAL_QUESTIONS },
+          attribs: { phone, school, ruby_course_interest: rubyCourse, message, score: correctCount, total: TOTAL_QUESTIONS },
         }),
       });
     } catch (e) {
