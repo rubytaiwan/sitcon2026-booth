@@ -1,0 +1,388 @@
+---
+layout: none
+title: Ruby Taiwan 社團課程合作計畫 2026
+permalink: /club-proposal
+---
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }}</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page {
+      size: A4 portrait;
+      margin: 15mm;
+    }
+
+    html, body {
+      width: 210mm;
+      margin: 0 auto;
+      background: #e8e8e8;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+      font-size: 13px;
+      color: #111;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      padding: 15mm;
+      position: relative;
+    }
+
+    .page + .page {
+      page-break-before: always;
+      margin-top: 20px;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 0; }
+      .page + .page { margin-top: 0; }
+    }
+
+    /* ── Typography ── */
+    h1 { font-size: 22px; font-weight: 800; color: #111; line-height: 1.2; }
+    h2 { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 8px;
+         border-left: 4px solid #111; padding-left: 8px; }
+    h3 { font-size: 12px; font-weight: 700; color: #111; margin-bottom: 5px; }
+    p  { line-height: 1.7; }
+
+    /* ── Header ── */
+    .header {
+      background: #111;
+      color: #fff;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .header-title { font-size: 20px; font-weight: 800; }
+    .header-sub2  { font-size: 14px; font-weight: 600; margin-top: 3px; opacity: 0.85; }
+    .header-sub   { font-size: 11px; margin-top: 4px; opacity: 0.6; letter-spacing: 0.5px; }
+
+    /* ── Tagline ── */
+    .tagline {
+      font-size: 13px;
+      font-weight: 600;
+      color: #111;
+      border: 1.5px solid #111;
+      padding: 9px 13px;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Offer grid ── */
+    .offer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .offer-item {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+    }
+    .offer-title { font-weight: 700; font-size: 12px; display: block; margin-bottom: 2px; }
+    .offer-desc  { font-size: 11px; color: #444; line-height: 1.5; }
+
+    /* ── Version cards ── */
+    .version-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .version-card {
+      border: 1.5px solid #111;
+      padding: 10px 12px;
+    }
+    .version-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 2px 7px;
+      margin-bottom: 5px;
+      background: #111;
+      color: #fff;
+    }
+    .version-card ul { padding-left: 14px; font-size: 11px; color: #333; line-height: 1.7; }
+    .version-result {
+      margin-top: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #111;
+      border-top: 1px solid #ccc;
+      padding-top: 5px;
+    }
+
+    /* ── Steps ── */
+    .steps { margin-bottom: 14px; }
+    .step-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+    .step-num {
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid #111;
+      color: #111;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── QR row ── */
+    .qr-row {
+      display: flex;
+      justify-content: space-around;
+      gap: 12px;
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1.5px solid #111;
+    }
+    .qr-item { text-align: center; }
+    .qr-item img { display: block; margin: 0 auto 5px; border: 1px solid #ccc; }
+    .qr-label { font-size: 10px; font-weight: 700; color: #111; }
+    .qr-url   { font-size: 9px; color: #666; word-break: break-all; max-width: 110px; margin: 0 auto; }
+    .footer-text {
+      text-align: center;
+      font-size: 10px;
+      color: #555;
+      margin-top: 10px;
+      line-height: 1.6;
+      border-top: 1px solid #ccc;
+      padding-top: 8px;
+    }
+
+    /* ── Back page: table ── */
+    .syllabus-section { margin-bottom: 18px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-top: 7px;
+    }
+    thead tr { background: #111; color: #fff; }
+    thead th { padding: 5px 8px; font-weight: 700; text-align: left; }
+    tbody tr:nth-child(even) { background: #f5f5f5; }
+    tbody tr:nth-child(odd)  { background: #fff; }
+    tbody td { padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #ddd; color: #333; }
+    tbody td:first-child { white-space: nowrap; color: #777; font-size: 10px; }
+    tbody td:nth-child(2) { white-space: nowrap; font-weight: 700; color: #111; }
+
+    .info-box {
+      background: #f5f5f5;
+      border-left: 4px solid #111;
+      padding: 9px 13px;
+      margin-top: 12px;
+      font-size: 11px;
+      line-height: 1.8;
+      color: #333;
+    }
+    .info-box strong { color: #111; }
+    .highlight-box {
+      border: 1.5px solid #111;
+      padding: 9px 13px;
+      margin-top: 10px;
+      font-size: 11px;
+      line-height: 1.8;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ 正面 ══════════════════ -->
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-title">Ruby Taiwan × 你的社團</div>
+    <div class="header-sub2">社團課程合作計畫 2026</div>
+    <div class="header-sub">Ruby Taiwan Community · ruby.tw · contact@ruby.tw</div>
+  </div>
+
+  <!-- Tagline -->
+  <div class="tagline">
+    讓你的社員在一個下午，用 <strong>AI + Ruby on Rails</strong> 做出第一個 Web App。
+  </div>
+
+  <!-- 我們提供什麼 -->
+  <h2>我們提供什麼</h2>
+  <div class="offer-grid">
+    <div class="offer-item">
+      <span class="offer-title">免費到校授課</span>
+      <span class="offer-desc">Ruby Taiwan 社群講師到你的社團上一堂 3.5 小時的實作課</span>
+    </div>
+    <div class="offer-item">
+      <span class="offer-title">零安裝開發環境</span>
+      <span class="offer-desc">使用 GitHub Codespaces，學員只需要瀏覽器和 GitHub 帳號</span>
+    </div>
+    <div class="offer-item">
+      <span class="offer-title">AI 輔助教學</span>
+      <span class="offer-desc">課程融入 AI 工具，學員跟 AI 對話設計 App、生成前端 UI</span>
+    </div>
+    <div class="offer-item">
+      <span class="offer-title">完整教材與 Prompt 卡</span>
+      <span class="offer-desc">Step-by-step 教材 + AI Prompt 範本，課後可自行複習</span>
+    </div>
+    <div class="offer-item" style="grid-column: span 2;">
+      <span class="offer-title">成果展示</span>
+      <span class="offer-desc">課程結束時每位學員都有一個能動的 Web App，可直接截圖分享</span>
+    </div>
+  </div>
+
+  <!-- 兩種版本 -->
+  <h2>兩種課程版本</h2>
+  <div class="version-row">
+    <div class="version-card">
+      <span class="version-tag">版本 A — 大學社團</span>
+      <h3>大學本科生版</h3>
+      <ul>
+        <li>對象：有 Python / C 基礎，未碰過 Web 的本科生</li>
+        <li>內容：HTTP 概念 → Rails scaffold → AI 前端美化 → 選修功能 → 成果展示</li>
+      </ul>
+      <div class="version-result">成果：有 CRUD 功能、AI 美化前端的 Web App</div>
+    </div>
+    <div class="version-card">
+      <span class="version-tag">版本 B — 高中社團</span>
+      <h3>高中生版</h3>
+      <ul>
+        <li>對象：程式基礎薄弱或零基礎的高中生</li>
+        <li>內容：Ruby 初體驗 → 跟 AI 聊 App 點子 → Rails 魔法時刻 → AI 美化 → 個人化</li>
+      </ul>
+      <div class="version-result">成果：客製化個人小網站，有 AI 設計的外觀</div>
+    </div>
+  </div>
+
+  <!-- 合作方式 -->
+  <h2>合作方式</h2>
+  <div class="steps">
+    <div class="step-row"><div class="step-num">1</div><div>社團填寫合作申請表（掃下方 QR Code）</div></div>
+    <div class="step-row"><div class="step-num">2</div><div>Ruby Taiwan 講師與社團確認日期和版本</div></div>
+    <div class="step-row"><div class="step-num">3</div><div>課前寄送環境準備指引（學員只需開好 GitHub 帳號）</div></div>
+    <div class="step-row"><div class="step-num">4</div><div>當天到校授課 3.5 小時</div></div>
+    <div class="step-row"><div class="step-num">5</div><div>課後提供教材連結與社群邀請</div></div>
+  </div>
+
+  <!-- QR Codes -->
+  <div class="qr-row">
+    <div class="qr-item">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=https%3A%2F%2Fforms.gle%2FYgLYxQ1Xp48i7pbD9" width="110" height="110" alt="合作申請表 QR Code">
+      <div class="qr-label">合作申請表</div>
+      <div class="qr-url">forms.gle/YgLYxQ1Xp48i7pbD9</div>
+    </div>
+    <div class="qr-item">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=https%3A%2F%2Fdiscord.com%2Finvite%2FyaYHWQsmcz" width="110" height="110" alt="Discord QR Code">
+      <div class="qr-label">Ruby Taiwan Discord</div>
+      <div class="qr-url">discord.gg/yaYHWQsmcz</div>
+    </div>
+    <div class="qr-item">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=https%3A%2F%2Frubytaiwan.kktix.cc%2F" width="110" height="110" alt="KKTIX QR Code">
+      <div class="qr-label">Ruby Jam 月聚會</div>
+      <div class="qr-url">rubytaiwan.kktix.cc</div>
+    </div>
+  </div>
+  <div class="footer-text">
+    Ruby Taiwan — 臺灣 Ruby 程式語言社群，自 2008 年起持續推動 Ruby 技術交流<br>
+    ruby.tw · @rubytaiwan2008 · discord.gg/yaYHWQsmcz
+  </div>
+
+</div><!-- end page front -->
+
+
+<!-- ══════════════════ 反面 ══════════════════ -->
+<div class="page">
+
+  <div class="header">
+    <div class="header-title">課程大綱詳情</div>
+    <div class="header-sub">Ruby Taiwan 社團課程合作計畫 2026 — 3.5 小時實作課</div>
+  </div>
+
+  <!-- 版本 A -->
+  <div class="syllabus-section">
+    <h2>版本 A：大學本科生版（3.5 小時）</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:80px;">時間</th>
+          <th style="width:110px;">階段</th>
+          <th>內容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0:00–0:10</td><td>開場</td><td>Ruby Taiwan 社群介紹、課程目標、確認 Codespace 環境</td></tr>
+        <tr><td>0:10–0:25</td><td>Web 怎麼運作的</td><td>瀏覽器 DevTools 實際觀察 HTTP Request / Response</td></tr>
+        <tr><td>0:25–0:45</td><td>跟 AI 聊你的 App</td><td>用 Prompt 引導卡，讓 AI 幫你設計 Model 和 scaffold 指令</td></tr>
+        <tr><td>0:45–1:10</td><td>Rails 起手式</td><td>執行 scaffold → db:migrate → server → 第一次看到自己的 App！</td></tr>
+        <tr><td>1:10–1:20</td><td>休息</td><td>—</td></tr>
+        <tr><td>1:20–1:45</td><td>理解並客製化</td><td>認識 MVC 架構，修改 routes 和 view</td></tr>
+        <tr><td>1:45–2:35</td><td>AI 前端美化</td><td>截圖 → 用 AI 生成 Tailwind CSS → 貼回 view → 反覆調整</td></tr>
+        <tr><td>2:35–2:45</td><td>休息</td><td>—</td></tr>
+        <tr><td>2:45–3:10</td><td>加分功能（自選）</td><td>圖片上傳 / 資料驗證 / AI 輔助加搜尋功能</td></tr>
+        <tr><td>3:10–3:30</td><td>Show &amp; Tell</td><td>成果展示 + 加入社群</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 版本 B -->
+  <div class="syllabus-section">
+    <h2>版本 B：高中生版（3.5 小時）</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:80px;">時間</th>
+          <th style="width:110px;">階段</th>
+          <th>內容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0:00–0:10</td><td>開場</td><td>Ruby Taiwan 社群介紹、課程目標、確認 Codespace 環境</td></tr>
+        <tr><td>0:10–0:25</td><td>Ruby 初體驗</td><td>irb 互動：<code>"hello".reverse</code>、<code>5.times { puts "..." }</code>，感受 Ruby 的對話感</td></tr>
+        <tr><td>0:25–0:45</td><td>跟 AI 聊你的 App</td><td>更具體的 Prompt 範本，提供靈感清單，助教主動協助</td></tr>
+        <tr><td>0:45–1:10</td><td>魔法時刻</td><td>跑 scaffold → 看到 App 能動。強調「一行指令 = 一個 App」</td></tr>
+        <tr><td>1:10–1:20</td><td>休息</td><td>—</td></tr>
+        <tr><td>1:20–1:40</td><td>改改看！</td><td>改文字 → 存檔 → 重整 → 看到變化。建立改 code 的肌肉記憶</td></tr>
+        <tr><td>1:40–2:30</td><td>AI 前端美化</td><td>助教 live demo → 學員用 Prompt 卡操作 → 只需改「風格」和「顏色」</td></tr>
+        <tr><td>2:30–2:40</td><td>休息</td><td>—</td></tr>
+        <tr><td>2:40–3:05</td><td>讓它更像你的</td><td>用 AI 寫「關於」頁面文案 + 新增 about 頁面（三步驟）</td></tr>
+        <tr><td>3:05–3:30</td><td>成果分享</td><td>截圖上傳 Discord → 票選最佳命名獎、最佳設計獎</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 補充資訊 -->
+  <div class="info-box">
+    <strong>【師資】</strong>Ruby Taiwan 社群志工講師，每場配置 1 位主講 + 每 4–5 人 1 位助教<br>
+    <strong>【費用】</strong>完全免費（由 Ruby Taiwan 社群支持）<br>
+    <strong>【場地】</strong>貴社團提供教室即可，需有網路和投影設備<br>
+    <strong>【人數】</strong>建議 10–25 人（可依社團規模調整）<br>
+    <strong>【技術需求】</strong>學員自備筆電 + GitHub 帳號（課前準備）
+  </div>
+
+  <div class="highlight-box">
+    <strong>課程融入 AI 工具的原因</strong><br>
+    不是為了趕流行，而是因為「描述需求 → AI 生成 code → 理解並調整」這個工作流，正是 2026 年軟體開發的日常。我們希望學員從第一天就學會「跟 AI 協作」的正確姿勢。
+  </div>
+
+  <div class="footer-text" style="margin-top: 12px;">
+    合作洽詢：contact@ruby.tw · ruby.tw<br>
+    Ruby Taiwan — 臺灣 Ruby 程式語言社群，自 2008 年起持續推動 Ruby 技術交流
+  </div>
+
+</div><!-- end page back -->
+
+</body>
+</html>
