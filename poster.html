@@ -1,0 +1,584 @@
+---
+layout: none
+title: Ruby Alchemy Challenge — SITCON 2026
+permalink: /poster
+---
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Montserrat:wght@400;500;600;700&family=Lobster&display=swap">
+  <script src="{{ '/assets/js/qrcode.min.js' | relative_url }}"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    html, body {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: #f0f0f0;
+    }
+
+    .poster {
+      width: 210mm;
+      height: 297mm;
+      background: #fef6f0;
+      font-family: Montserrat, sans-serif;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── PRINT: remove page bg chrome ── */
+    @media print {
+      html, body { background: white; }
+      .no-print { display: none !important; }
+    }
+
+    /* ══════════════════════════
+       HEADER — ruby red hero
+       ══════════════════════════ */
+    .poster-header {
+      background: #bd3f32;
+      width: 100%;
+      flex: 0 0 72mm;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8mm 12mm 14mm;
+    }
+
+    /* decorative ground SVG at very bottom of header */
+    .header-ground {
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 130%;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+    .header-ground svg { width: 100%; height: auto; display: block; }
+    /* force ground paths white */
+    .header-ground svg .cover-icons,
+    .header-ground svg path,
+    .header-ground svg polygon,
+    .header-ground svg rect,
+    .header-ground svg circle { fill: #fff59d !important; }
+
+    /* subtle radial glow behind logo */
+    .header-glow {
+      position: absolute;
+      width: 55mm;
+      height: 55mm;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,245,157,0.18) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      pointer-events: none;
+    }
+
+    .header-logo {
+      width: 28mm;
+      height: auto;
+      display: block;
+      margin-bottom: 4mm;
+      position: relative;
+      z-index: 1;
+    }
+    .header-logo svg { width: 100%; height: auto; }
+    /* tint logo lighter for white-on-red feel */
+    .header-logo svg .st0 { fill: #e8756e; }
+    .header-logo svg .st1 { fill: #f09490; }
+    .header-logo svg .st3 { fill: #c44b44; }
+    .header-logo svg .st6 { fill: #d65850; }
+    .header-logo svg .st8 { fill: #cc4040; }
+    .header-logo svg .st7 { fill: rgba(255,255,255,0.6); }
+
+    .header-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6pt;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: rgba(255,245,157,0.9);
+      text-transform: uppercase;
+      margin-bottom: 2.5mm;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-title {
+      font-size: 20pt;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+      line-height: 1.15;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 2mm;
+    }
+
+    .header-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5pt;
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ══════════════════════════
+       BODY content
+       ══════════════════════════ */
+    .poster-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 6mm 10mm 5mm;
+      gap: 4mm;
+    }
+
+    /* ── QR section ── */
+    .qr-section {
+      display: flex;
+      align-items: center;
+      gap: 6mm;
+      background: #fff;
+      border: 1.5px solid #e8d5d3;
+      border-radius: 10px;
+      padding: 5mm 7mm;
+      flex: 0 0 auto;
+    }
+
+    .qr-box {
+      flex: 0 0 auto;
+      width: 42mm;
+      height: 42mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-box svg { width: 42mm !important; height: 42mm !important; display: block; }
+
+    .qr-info { flex: 1; }
+
+    .qr-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6pt;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #bd3f32;
+      text-transform: uppercase;
+      margin-bottom: 1.5mm;
+    }
+
+    .qr-heading {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #323232;
+      line-height: 1.2;
+      margin-bottom: 2mm;
+    }
+
+    .qr-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7pt;
+      color: #bd3f32;
+      background: #fef6f0;
+      border-radius: 4px;
+      padding: 1.5mm 3mm;
+      display: inline-block;
+      margin-bottom: 2.5mm;
+    }
+
+    .qr-desc {
+      font-size: 7.5pt;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* ── Steps grid ── */
+    .steps-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6pt;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #bd3f32;
+      text-transform: uppercase;
+      margin-bottom: 1mm;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+      flex: 0 0 auto;
+    }
+
+    .step-card {
+      background: #fff;
+      border: 1.5px solid #e8d5d3;
+      border-radius: 10px;
+      padding: 4mm 4.5mm;
+      display: flex;
+      align-items: flex-start;
+      gap: 3mm;
+    }
+
+    .step-num {
+      width: 7mm;
+      height: 7mm;
+      min-width: 7mm;
+      background: linear-gradient(135deg, #bd3f32, #e05a4b);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 0.3mm;
+    }
+
+    .step-text {}
+    .step-title {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #323232;
+      margin-bottom: 1mm;
+      line-height: 1.2;
+    }
+    .step-desc {
+      font-size: 7pt;
+      color: #555;
+      line-height: 1.5;
+    }
+    .step-tag {
+      display: inline-block;
+      font-size: 6pt;
+      font-weight: 600;
+      padding: 0.5mm 2mm;
+      border-radius: 10px;
+      margin-top: 1.5mm;
+    }
+    .step-tag.green { background: #dcfce7; color: #16a34a; }
+    .step-tag.red   { background: #fee2e2; color: #bd3f32; }
+
+    /* ── Code block ── */
+    .code-block {
+      border-radius: 10px;
+      overflow: hidden;
+      flex: 0 0 auto;
+      box-shadow: 0 2px 8px rgba(50,50,50,0.1);
+    }
+
+    .code-header {
+      background: #2d2d3f;
+      padding: 0 4mm;
+      height: 7mm;
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+    }
+
+    .code-dot {
+      width: 3mm;
+      height: 3mm;
+      border-radius: 50%;
+    }
+    .code-dot.r { background: #ff5f57; }
+    .code-dot.y { background: #febc2e; }
+    .code-dot.g { background: #28c840; }
+
+    .code-filename {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6.5pt;
+      color: #7a6a88;
+      margin: 0 auto;
+    }
+
+    .code-body {
+      background: #1e1e2e;
+      padding: 3.5mm 5mm;
+    }
+
+    .code-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      line-height: 1.8;
+      white-space: pre;
+    }
+    .c-comment { color: #6272a4; }
+    .c-keyword  { color: #ff79c6; }
+    .c-func     { color: #50fa7b; }
+    .c-string   { color: #f1fa8c; }
+    .c-num      { color: #bd93f9; }
+    .c-check    { color: #50fa7b; }
+    .c-plain    { color: #e8d5d3; }
+
+    /* ── SNS QR Section ── */
+    .sns-section {
+      background: #fff;
+      border: 1.5px solid #e8d5d3;
+      border-radius: 10px;
+      padding: 4mm 5mm;
+      flex: 0 0 auto;
+    }
+
+    .sns-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3mm;
+      margin-top: 2mm;
+    }
+
+    .sns-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5mm;
+    }
+
+    .sns-qr {
+      width: 28mm;
+      height: 28mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 4px;
+    }
+    .sns-qr svg { width: 28mm !important; height: 28mm !important; display: block; }
+
+    .sns-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6.5pt;
+      font-weight: 600;
+      color: #323232;
+      text-align: center;
+    }
+
+    .sns-handle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 5.5pt;
+      color: #9b9b9b;
+      text-align: center;
+    }
+
+    /* ── Footer ── */
+    .poster-footer {
+      flex: 0 0 auto;
+      padding: 0 10mm 4mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #e8d5d3;
+      padding-top: 2.5mm;
+    }
+
+    .footer-brand {
+      font-family: Lobster, cursive;
+      font-size: 10pt;
+      color: #bd3f32;
+    }
+
+    .footer-links {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6pt;
+      color: #9b9b9b;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* ── Screen-only print button ── */
+    .print-btn {
+      display: block;
+      margin: 6mm auto 0;
+      padding: 3mm 8mm;
+      background: #bd3f32;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+    .print-btn:hover { background: #e05a4b; }
+
+    @media print {
+      html, body { background: white; width: 210mm; height: 297mm; }
+      .poster { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="poster">
+
+  <!-- ── HEADER ── -->
+  <div class="poster-header">
+    <div class="header-glow"></div>
+
+    <div class="header-logo">
+      {% include cover/ruby_taiwan_logo.svg %}
+    </div>
+
+    <p class="header-eyebrow">// Ruby Taiwan × SITCON 2026 攤位挑戰</p>
+    <h1 class="header-title">Ruby 互動煉金術</h1>
+    <p class="header-subtitle">10 道 Ruby 挑戰・執行真實程式碼・完成即可領取小禮物</p>
+
+    <div class="header-ground">
+      {% include cover/cover-ground.svg %}
+    </div>
+  </div>
+
+  <!-- ── BODY ── -->
+  <div class="poster-body">
+
+    <!-- QR Code section -->
+    <div class="qr-section">
+      <div class="qr-box" id="qr-container"></div>
+      <div class="qr-info">
+        <p class="qr-label">// 第一步 — 掃碼開始</p>
+        <h2 class="qr-heading">掃碼玩<br>互動煉金術</h2>
+        <span class="qr-url">sitcon2026-booth.ruby.tw</span>
+        <p class="qr-desc">在瀏覽器中用真實 Ruby WASM 執行程式碼，完成 10 道關卡挑戰！</p>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <p class="steps-label">// 遊戲流程</p>
+    <div class="steps-grid">
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <p class="step-title">掃碼開始遊戲</p>
+          <p class="step-desc">掃描上方 QR Code，前往挑戰頁面，作答 10 道 Ruby 題目。</p>
+          <span class="step-tag red">約 5 分鐘</span>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <p class="step-title">出示完成畫面</p>
+          <p class="step-desc">完成後，將結果畫面出示給攤位 Staff 確認。</p>
+          <span class="step-tag green">Staff 確認</span>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <p class="step-title">出示大地遊戲票券</p>
+          <p class="step-desc">請出示 SITCON 2026 票券，由 Staff 掃描 QR Code 解鎖關卡。</p>
+          <span class="step-tag red">大地遊戲 ✓</span>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <p class="step-title">領取小禮物！</p>
+          <p class="step-desc">恭喜完成！領取小禮物，並歡迎認識 Ruby Taiwan 社群！</p>
+          <span class="step-tag green">禮物解鎖 🎁</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Code block -->
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-dot r"></span>
+        <span class="code-dot y"></span>
+        <span class="code-dot g"></span>
+        <span class="code-filename">challenge.rb</span>
+      </div>
+      <div class="code-body">
+        <div class="code-line"><span class="c-comment"># Ruby WASM — 直接在瀏覽器執行真實 Ruby</span></div>
+        <div class="code-line"><span class="c-func">puts</span> <span class="c-string">"Hello, SITCON 2026!"</span>  <span class="c-comment">#=&gt; Hello, SITCON 2026!</span></div>
+        <div class="code-line"><span class="c-num">42</span><span class="c-plain">.next</span>                    <span class="c-comment">#=&gt; 43</span></div>
+        <div class="code-line"><span class="c-string">"ruby"</span><span class="c-plain">.upcase</span>               <span class="c-comment">#=&gt; "RUBY"</span></div>
+      </div>
+    </div>
+
+    <!-- SNS QR Codes -->
+    <div class="sns-section">
+      <p class="steps-label">// 追蹤 Ruby Taiwan 社群</p>
+      <div class="sns-grid">
+        <div class="sns-card">
+          <div class="sns-qr" id="sns-yt"></div>
+          <p class="sns-name">YouTube</p>
+          <p class="sns-handle">@rubytaiwan7434</p>
+        </div>
+        <div class="sns-card">
+          <div class="sns-qr" id="sns-ig"></div>
+          <p class="sns-name">Instagram</p>
+          <p class="sns-handle">@rubytaiwan2008</p>
+        </div>
+        <div class="sns-card">
+          <div class="sns-qr" id="sns-th"></div>
+          <p class="sns-name">Threads</p>
+          <p class="sns-handle">@rubytaiwan2008</p>
+        </div>
+        <div class="sns-card">
+          <div class="sns-qr" id="sns-fb"></div>
+          <p class="sns-name">Facebook</p>
+          <p class="sns-handle">RubyJamTW</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="poster-footer">
+      <span class="footer-brand">Ruby Taiwan</span>
+      <div class="footer-links">
+        Since 2008 &nbsp;·&nbsp; discord.gg/yaYHWQsmcz &nbsp;·&nbsp; rubytaiwan.kktix.cc
+      </div>
+    </div>
+
+  </div><!-- /.poster-body -->
+
+</div><!-- /.poster -->
+
+<!-- Print button (screen only) -->
+<div class="no-print" style="text-align:center; padding-bottom: 10mm;">
+  <button class="print-btn" onclick="window.print()">⎙ 列印 / 儲存為 PDF</button>
+</div>
+
+<script>
+  (function() {
+    function makeQR(id, url, cellSize) {
+      var q = qrcode(4, 'M');
+      q.addData(url);
+      q.make();
+      document.getElementById(id).innerHTML = q.createSvgTag(cellSize || 5, 0);
+    }
+    makeQR('qr-container', 'https://sitcon2026-booth.ruby.tw/', 5);
+    makeQR('sns-yt', 'https://www.youtube.com/@rubytaiwan7434', 3);
+    makeQR('sns-ig', 'https://www.instagram.com/rubytaiwan2008/', 3);
+    makeQR('sns-th', 'https://www.threads.com/@rubytaiwan2008', 3);
+    makeQR('sns-fb', 'https://www.facebook.com/RubyJamTW', 3);
+  })();
+</script>
+
+</body>
+</html>
