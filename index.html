@@ -393,8 +393,7 @@ function toRubyLit(v) {
 }
 
 // ── 題目工廠函數 ─────────────────────────────────────────
-function generateTaskFromDef(def) {
-  const raw = generateSecret(def);
+function buildQuestion(def, raw) {
   const isArray  = Array.isArray(raw);
   const isString = def.secret_type === 'string';
 
@@ -430,20 +429,47 @@ function generateTaskFromDef(def) {
   };
 }
 
+function generateTaskFromDef(def) {
+  return buildQuestion(def, generateSecret(def));
+}
+
+// ── State persistence（sessionStorage，防止 iOS 意外 reload 時遺失進度）────
+const SAVE_KEY = 'ruby_quiz_v1';
+let quizMeta = []; // [{di: TASK_DEFS index, raw: secret value}]
+
+function saveState() {
+  try {
+    sessionStorage.setItem(SAVE_KEY, JSON.stringify({
+      phase: currentPhase, qi: questionIndex, cc: correctCount,
+      ca: currentAttempts, name: playerName, ts: proofTs, meta: quizMeta,
+    }));
+  } catch (_) {}
+}
+
+function clearSavedState() {
+  try { sessionStorage.removeItem(SAVE_KEY); } catch (_) {}
+}
+
 // ── 10 題梯度出題 (3E + 5M + 2H) ─────────────────────────
 let quizQuestions = [];
 
-function prepareQuiz() {
-  const pick = (arr, n) => arr.slice().sort(() => Math.random() - 0.5).slice(0, n);
-  const easy   = TASK_DEFS.filter(t => t.difficulty === 'easy');
-  const medium = TASK_DEFS.filter(t => t.difficulty === 'medium');
-  const hard   = TASK_DEFS.filter(t => t.difficulty === 'hard');
+function prepareQuiz(restoredMeta) {
+  if (restoredMeta) {
+    quizMeta = restoredMeta;
+    quizQuestions = restoredMeta.map(({di, raw}) => buildQuestion(TASK_DEFS[di], raw));
+    return;
+  }
+  const pickIdx = (indices, n) => indices.slice().sort(() => Math.random() - 0.5).slice(0, n);
+  const easyIdx  = TASK_DEFS.flatMap((t, i) => t.difficulty === 'easy'   ? [i] : []);
+  const medIdx   = TASK_DEFS.flatMap((t, i) => t.difficulty === 'medium' ? [i] : []);
+  const hardIdx  = TASK_DEFS.flatMap((t, i) => t.difficulty === 'hard'   ? [i] : []);
   const selected = [
-    ...pick(easy,   Math.min(3, easy.length)),
-    ...pick(medium, Math.min(5, medium.length)),
-    ...pick(hard,   Math.min(2, hard.length)),
+    ...pickIdx(easyIdx,  Math.min(3, easyIdx.length)),
+    ...pickIdx(medIdx,   Math.min(5, medIdx.length)),
+    ...pickIdx(hardIdx,  Math.min(2, hardIdx.length)),
   ];
-  quizQuestions = selected.map(def => generateTaskFromDef(def));
+  quizMeta = selected.map(di => ({ di, raw: generateSecret(TASK_DEFS[di]) }));
+  quizQuestions = quizMeta.map(({di, raw}) => buildQuestion(TASK_DEFS[di], raw));
 }
 
 // ── 狀態 ─────────────────────────────────────────────────
@@ -464,7 +490,8 @@ window.switchPhase = function (name) {
   window.scrollTo({ top: document.getElementById('challenge').offsetTop - 20, behavior: 'smooth' });
 
   if (name === 'result') renderResult();
-  if (name === 'proof')  renderProof();
+  if (name === 'proof')  { renderProof(); clearSavedState(); }
+  else saveState();
 };
 
 // ── 進度條 ────────────────────────────────────────────────
@@ -567,6 +594,7 @@ function nextQuestion() {
     currentAttempts = 0;
     updateProgress();
     renderQuestion(quizQuestions[questionIndex]);
+    saveState();
   }
 }
 
@@ -885,11 +913,30 @@ async function initRuby() {
 }
 
 // ── 初始化 ────────────────────────────────────────────────
-prepareQuiz();
-updateProgress();
-renderQuestion(quizQuestions[0]);
-document.getElementById('run-btn').style.opacity = '0.6';
-initRuby();
+(function () {
+  let snap;
+  try { snap = JSON.parse(sessionStorage.getItem(SAVE_KEY)); } catch (_) {}
+
+  if (snap && Array.isArray(snap.meta) && snap.meta.length > 0) {
+    // iOS 等情境 reload 後，從 sessionStorage 還原進度
+    prepareQuiz(snap.meta);
+    questionIndex   = snap.qi   ?? 0;
+    correctCount    = snap.cc   ?? 0;
+    currentAttempts = snap.ca   ?? 0;
+    playerName      = snap.name ?? '';
+    proofTs         = snap.ts   ?? '';
+    currentPhase    = snap.phase ?? 'quiz';
+  } else {
+    prepareQuiz();
+  }
+
+  updateProgress();
+  renderQuestion(quizQuestions[Math.min(questionIndex, quizQuestions.length - 1)]);
+  // switchPhase 會處理 phase 顯示、renderResult/renderProof，以及 saveState
+  switchPhase(currentPhase);
+  document.getElementById('run-btn').style.opacity = '0.6';
+  initRuby();
+})();
 
 document.getElementById('method-input').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') window.runRuby();
