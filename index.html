@@ -890,13 +890,28 @@ function renderProof() {
 // ── 載入 Ruby WASM ────────────────────────────────────────
 async function initRuby() {
   const statusEl = document.getElementById('ruby-status');
+  const wasmUrl  = '{{ "/assets/ruby-wasm/ruby+stdlib.wasm" | relative_url }}';
   try {
     const { DefaultRubyVM } = window["ruby-wasm-wasi"];
-    statusEl.textContent = '⏳ 載入 Ruby 4.0…';
 
-    const response = await fetch('{{ "/assets/ruby-wasm/ruby+stdlib.wasm" | relative_url }}');
-    const module   = await WebAssembly.compileStreaming(response);
-    const { vm }   = await DefaultRubyVM(module);
+    // Step 1: compile
+    statusEl.textContent = '⏳ 載入 Ruby 4.0 (1/2)…';
+    let module;
+    try {
+      // Preferred: streaming compile (memory-efficient, works on most browsers)
+      module = await WebAssembly.compileStreaming(fetch(wasmUrl));
+    } catch (_) {
+      // Fallback: fetch as ArrayBuffer then compile
+      // (handles browsers where compileStreaming silently fails)
+      statusEl.textContent = '⏳ 載入 Ruby 4.0 (fallback)…';
+      const resp = await fetch(wasmUrl);
+      const buf  = await resp.arrayBuffer();
+      module = await WebAssembly.compile(buf);
+    }
+
+    // Step 2: instantiate Ruby VM
+    statusEl.textContent = '⏳ 初始化 Ruby VM (2/2)…';
+    const { vm } = await DefaultRubyVM(module);
 
     rubyVM = vm;
     // Warm-up: pre-load stringio to avoid deep call stack on first eval
@@ -906,7 +921,9 @@ async function initRuby() {
     statusEl.style.color = '#16a34a';
     document.getElementById('run-btn').style.opacity = '1';
   } catch (e) {
-    statusEl.textContent = '❌ 載入失敗';
+    // Show actual error to aid remote debugging
+    const msg = (e && (e.message || String(e))) || 'unknown';
+    statusEl.textContent = `❌ 載入失敗: ${msg.slice(0, 80)}`;
     statusEl.style.color = '#f87171';
     console.error('Ruby WASM load error:', e);
   }
