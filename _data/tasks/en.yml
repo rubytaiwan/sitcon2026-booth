@@ -1,0 +1,219 @@
+# ── Ruby Interactive Challenge Questions (English) ──────────
+#
+# Cultural references adapted for international audiences.
+# answer, secret_type, difficulty, tips[].code are unchanged.
+# Only: question, category, tips[].desc are translated/adapted.
+# ─────────────────────────────────────────────────────────────
+
+# ── Easy ─────────────────────────────────────────────────────
+
+# Task 1: Sort
+- category: Array Operations
+  difficulty: easy
+  secret_type: array
+  array_length: 5
+  element_range: [1, 20]
+  question: "Get your act together! Sort secret from smallest to largest."
+  answer: ".sort"
+  tips:
+    - { code: "[3,1,2].sort", desc: "Sort ascending" }
+    - { code: "[3,1,2].sort.reverse", desc: "Sort descending" }
+    - { code: "[3,1,2].min", desc: "Minimum value" }
+    - { code: "[3,1,2].max", desc: "Maximum value" }
+
+# Task 2: Pop
+- category: Array Operations
+  difficulty: easy
+  secret_type: array
+  array_length: 4
+  element_range: [1, 9]
+  question: "Last one out! Remove and return the last element of secret."
+  answer: ".pop"
+  tips:
+    - { code: "[1,2,3].pop", desc: "Remove and return last element" }
+    - { code: "[1,2,3].shift", desc: "Remove and return first element" }
+    - { code: "[1,2,3].last", desc: "Peek at last (no removal)" }
+    - { code: "[1,2,3].first", desc: "Peek at first (no removal)" }
+
+# Task 3: Chars
+- category: String Operations
+  difficulty: easy
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, code, wasm]
+  question: "Break it apart! Split secret into individual characters."
+  answer: ".chars"
+  tips:
+    - { code: '"hello".chars', desc: "Split into character array" }
+    - { code: '"hello".bytes', desc: "Split into byte array" }
+    - { code: '"hello".length', desc: "String length" }
+    - { code: '"hello".reverse', desc: "Reverse the string" }
+
+# Task 4: Positive?
+- category: Number Operations
+  difficulty: easy
+  secret_type: integer
+  secret_range: [1, 100]
+  question: "Good vibes only! Is secret a positive number?"
+  answer: ".positive?"
+  tips:
+    - { code: "42.positive?", desc: "Is it positive?" }
+    - { code: "-1.negative?", desc: "Is it negative?" }
+    - { code: "0.zero?", desc: "Is it zero?" }
+    - { code: "42.even?", desc: "Is it even?" }
+
+# Task 5: Empty?
+- category: String Operations
+  difficulty: easy
+  secret_type: string
+  secret_pool: ["", "ruby", "", "sitcon"]
+  question: "Wait... is there anything in secret? Check if it's empty!"
+  answer: ".empty?"
+  tips:
+    - { code: '"".empty?', desc: "Empty string → true" }
+    - { code: '"hello".empty?', desc: "Non-empty → false" }
+    - { code: "[].empty?", desc: "Empty array → true" }
+    - { code: '"hello".nil?', desc: "String is not nil → false" }
+
+
+### Medium
+
+
+# Task 6: Shuffle
+- category: Array Operations
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 20]
+  question: "Shuffle the deck! Randomize the order of elements in secret."
+  answer: ".shuffle"
+  tips:
+    - { code: "[1,2,3].shuffle", desc: "Randomize order" }
+    - { code: "[1,2,3].sort", desc: "Sort (restore order)" }
+    - { code: "[1,2,3].reverse", desc: "Reverse order" }
+    - { code: "[1,2,3].rotate", desc: "Rotate elements" }
+
+# Task 7: Freeze
+- category: Object Operations
+  difficulty: medium
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, hello, world]
+  question: "Hard lock! Freeze secret so it can never be modified again."
+  answer: ".freeze"
+  tips:
+    - { code: '"hello".freeze', desc: "Freeze a string" }
+    - { code: '"hello".frozen?', desc: "Check if frozen" }
+    - { code: '"hello".dup', desc: "Duplicate (unfreezes)" }
+    - { code: "42.frozen?", desc: "Numbers are always frozen" }
+
+# Task 8: Rotate
+- category: Array Operations
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 9]
+  question: "Musical chairs! Move the first element of secret to the back of the line."
+  answer: ".rotate"
+  tips:
+    - { code: "[1,2,3].rotate", desc: "Rotate by one position" }
+    - { code: "[1,2,3].rotate(2)", desc: "Rotate by two positions" }
+    - { code: "[1,2,3].reverse", desc: "Reverse the array" }
+    - { code: "[1,2,3].shuffle", desc: "Randomize order" }
+
+# Task 9: Zero?
+- category: Number Operations
+  difficulty: medium
+  secret_type: integer
+  secret_range: [0, 0]
+  question: "Absolutely nothing! Check if secret is zero."
+  answer: ".zero?"
+  tips:
+    - { code: "0.zero?", desc: "Zero → true" }
+    - { code: "42.zero?", desc: "Not zero → false" }
+    - { code: "0.nil?", desc: "Zero is not nil → false" }
+    - { code: "0.positive?", desc: "Zero is not positive → false" }
+
+# Task 10: Sample
+- category: Array Operations
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 99]
+  question: "Pick a card, any card! Randomly draw one element from secret."
+  answer: ".sample"
+  tips:
+    - { code: "[1,2,3].sample", desc: "Pick one at random" }
+    - { code: "[1,2,3].sample(2)", desc: "Pick two at random" }
+    - { code: "[1,2,3].shuffle", desc: "Shuffle all elements" }
+    - { code: "[1,2,3].first", desc: "Take the first element" }
+
+
+### Hard
+
+
+# Task 11: Dup
+- category: Object Operations
+  difficulty: hard
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, kaigi]
+  question: "Copy-paste time! Make an independent duplicate of secret."
+  answer: ".dup"
+  tips:
+    - { code: '"hello".dup', desc: "Duplicate an object" }
+    - { code: '"hello".clone', desc: "Deep clone (preserves frozen state)" }
+    - { code: '"hello".freeze', desc: "Freeze an object" }
+    - { code: '"hello".object_id', desc: "Unique object identifier" }
+
+# Task 12: Abs
+- category: Number Operations
+  difficulty: hard
+  secret_type: integer
+  secret_range: [-99, -1]
+  question: "Flip the negativity! Convert secret to its absolute value."
+  answer: ".abs"
+  tips:
+    - { code: "(-42).abs", desc: "Absolute value → 42" }
+    - { code: "-42.negative?", desc: "Is it negative?" }
+    - { code: "42.positive?", desc: "Is it positive?" }
+    - { code: "(-42) * -1", desc: "Multiply by -1 also works" }
+
+# Task 13: Inspect
+- category: Object Operations
+  difficulty: hard
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, kaigi]
+  question: "Look closely! Reveal the true internal representation of secret."
+  answer: ".inspect"
+  tips:
+    - { code: '"hello".inspect', desc: '→ "\"hello\""' }
+    - { code: "42.inspect", desc: '→ "42"' }
+    - { code: "[1,2].inspect", desc: '→ "[1, 2]"' }
+    - { code: "nil.inspect", desc: '→ "nil"' }
+
+# Task 14: To_sym
+- category: Type Exploration
+  difficulty: hard
+  secret_type: string
+  secret_pool: [ruby, love, live, idol]
+  question: "Symbolize it! Convert secret from a String into a Symbol."
+  answer: ".to_sym"
+  tips:
+    - { code: '"hello".to_sym', desc: "String → Symbol" }
+    - { code: ":hello.to_s", desc: "Symbol → String" }
+    - { code: '"hello".class', desc: "→ String" }
+    - { code: ":hello.class", desc: "→ Symbol" }
+
+# Task 15: Flatten
+- category: Array Operations
+  difficulty: hard
+  secret_type: nested_array
+  secret_pool:
+    - [[1, 2], [3, [4, 5]], [6]]
+    - [[7, [8]], [9, 10], [[11]]]
+    - [[1], [2, [3, [4]]], [5]]
+  question: "Flatten it out! Turn secret's nested arrays into one flat array."
+  answer: ".flatten"
+  tips:
+    - { code: "[[1,2],[3,4]].flatten", desc: "Flatten nested arrays" }
+    - { code: "[[1,[2]],3].flatten(1)", desc: "Flatten only one level" }
+    - { code: "[1,2,3].compact", desc: "Remove nil elements" }
+    - { code: "[1,[2,3]].first", desc: "Get first element" }

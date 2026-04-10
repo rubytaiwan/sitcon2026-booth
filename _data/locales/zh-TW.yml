@@ -1,0 +1,111 @@
+# ── 繁體中文 (zh-TW) UI 字串 ─────────────────────────────────
+
+# ── Meta ──
+site_title: "Ruby 互動煉金術 | SITCON 2026"
+html_lang: "zh-Hant-TW"
+date_locale: "zh-TW"
+
+# ── Section Header ──
+header_tag: "// RUBY 互動煉金術 BOOTH CHALLENGE"
+header_title: "學 Ruby，從今天開始"
+header_subtitle: "連續挑戰 10 題，執行真實 Ruby 程式碼，完成後領取小禮物！"
+
+# ── Quiz Phase (HTML) ──
+quiz_progress_init: "第 1 / 10 題"
+quiz_score_init: "⭐ 0 題答對"
+quiz_loading: "載入中…"
+quiz_input_placeholder: ".方法名稱"
+quiz_run_btn: "▶ 執行 Ruby"
+quiz_ask_ai_btn: "✨ 詢問 AI"
+quiz_wasm_status_init: "⏳ 載入 Ruby WASM…"
+quiz_tips_title: "Ruby 小密技"
+quiz_powered_by: "POWERED BY"
+quiz_powered_by_name: "Ruby WASM"
+quiz_powered_by_desc: "真實 Ruby 4.0 在瀏覽器中執行"
+quiz_output_waiting: "等待執行…"
+
+# ── Quiz Phase (JS dynamic) ──
+quiz_progress: "第 {n} / 10 題"
+quiz_score: "⭐ {n} 題答對"
+diff_easy: "Easy"
+diff_medium: "Medium"
+diff_hard: "Hard"
+ask_ai_opening: "✅ 開啟中…"
+
+# ── Ruby WASM Status (JS) ──
+wasm_step1: "⏳ 載入 Ruby 4.0 (1/2)…"
+wasm_step1_fallback: "⏳ 載入 Ruby 4.0 (fallback)…"
+wasm_step2: "⏳ 初始化 Ruby VM (2/2)…"
+wasm_ready: "✅ Ruby 4.0 就緒"
+wasm_error_prefix: "❌ 載入失敗:"
+wasm_not_ready: "⏳ Ruby WASM 尚未載入，請稍候…"
+wasm_no_input: "⚠️ 請先輸入 Ruby 方法再執行！"
+exec_error_prefix: "執行錯誤:"
+
+# ── Feedback (JS) ──
+feedback_correct: "答對了！"
+feedback_wrong: "答案不對，還有 {n} 次機會"
+feedback_attempts_remaining: "剩 {n} 次"
+feedback_exhausted: "3 次機會用完，答案是："
+
+# ── Result Phase ──
+result_title: "🎉 挑戰完成！"
+result_great: "太厲害了！{n}/10 全都難不倒你 🔥"
+result_good: "答對 {n}/10 題，Ruby 功力大增！"
+result_encourage: "答對 {n}/10 題，繼續加油！"
+result_share_btn: "📲 分享到 IG"
+result_download_btn: "⬇️ 下載圖片"
+result_tag_reminder: "分享後記得 tag <strong>@rubytaiwan2008</strong> 喔！"
+result_next_btn: "繼續 → 填寫資料領禮物"
+
+# ── Canvas Scorecard (fillText) ──
+canvas_top_label: "SITCON 2026 × RUBY TAIWAN"
+canvas_tagline: "Ruby 互動煉金術"
+canvas_hashtags: "@rubytaiwan2008  #SITCON2026"
+
+# ── Web Share API ──
+share_title: "Ruby 互動煉金術 — SITCON 2026"
+share_text: "我在 SITCON 2026 完成了 Ruby 挑戰！答對 {n}/10 題 @rubytaiwan2008 #SITCON2026 #RubyTaiwan"
+share_filename: "ruby-challenge-sitcon2026.png"
+
+# ── Form Phase ──
+form_title: "📝 填寫資料"
+form_subtitle: "完成後可至攤位領取小禮物！"
+form_name_label: "暱稱"
+form_name_required: "*"
+form_name_placeholder: "你想讓大家怎麼稱呼你？"
+form_email_label: "Email"
+form_email_required: "*"
+form_phone_label: "手機"
+form_phone_placeholder: "09xxxxxxxx（選填）"
+form_school_label: "學校"
+form_school_placeholder: "你就讀的學校（選填）"
+form_ruby_course: "你所屬的科系或社團對免費的 Ruby 課程有興趣嗎？"
+form_message_label: "其它想對我們說的話"
+form_message_placeholder: "歡迎留言（選填）"
+form_submit_btn: "送出並完成 ✅"
+form_skip_btn: "略過，直接看完成證明"
+form_submitting: "送出中…"
+form_validation_error: "請填寫暱稱和 Email"
+
+# ── Proof Phase ──
+proof_event_label: "SITCON 2026 × RUBY TAIWAN"
+proof_title: "✅ 挑戰完成！"
+proof_show_staff: "🎁 請出示此畫面給工作人員"
+proof_show_staff_sub: "完成大地遊戲並領取小禮物"
+
+# ── Footer ──
+footer_text: "Ruby Taiwan × SITCON 2026 &nbsp;·&nbsp; Powered by Ruby WASM"
+
+# ── AI Prompt ──
+ai_prompt_intro: "我正在學 Ruby，有一道練習題。請用「引導式學習（Guided Learning）」的方式幫我，不要直接給答案，而是透過提問和漸進提示引導我自己找出解法。"
+ai_prompt_category_label: "【題目分類】"
+ai_prompt_question_label: "【題目說明】"
+ai_prompt_code_label: "【目前程式碼】"
+ai_prompt_code_comment: "# ??? 是我需要填入的 Ruby 方法"
+ai_prompt_instruction: "請先問我對這題的初步想法，再視情況給漸進式提示，最後確認我真的理解了再給答案。"
+
+# ── Language Switcher ──
+lang_switcher_zh: "中文"
+lang_switcher_en: "EN"
+lang_switcher_ja: "JA"
