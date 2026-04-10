@@ -1,0 +1,111 @@
+# ── English (en) UI strings ───────────────────────────────
+
+# ── Meta ──
+site_title: "Ruby Interactive Alchemy | SITCON 2026"
+html_lang: "en"
+date_locale: "en-US"
+
+# ── Section Header ──
+header_tag: "// RUBY INTERACTIVE ALCHEMY BOOTH CHALLENGE"
+header_title: "Start Learning Ruby Today"
+header_subtitle: "Answer 10 Ruby challenges, run real Ruby code, and claim your gift at the booth!"
+
+# ── Quiz Phase (HTML) ──
+quiz_progress_init: "Q 1 / 10"
+quiz_score_init: "⭐ 0 correct"
+quiz_loading: "Loading…"
+quiz_input_placeholder: ".method_name"
+quiz_run_btn: "▶ Run Ruby"
+quiz_ask_ai_btn: "✨ Ask AI"
+quiz_wasm_status_init: "⏳ Loading Ruby WASM…"
+quiz_tips_title: "Ruby Tips"
+quiz_powered_by: "POWERED BY"
+quiz_powered_by_name: "Ruby WASM"
+quiz_powered_by_desc: "Real Ruby 4.0 running in your browser"
+quiz_output_waiting: "Waiting for output…"
+
+# ── Quiz Phase (JS dynamic) ──
+quiz_progress: "Q {n} / 10"
+quiz_score: "⭐ {n} correct"
+diff_easy: "Easy"
+diff_medium: "Medium"
+diff_hard: "Hard"
+ask_ai_opening: "✅ Opening…"
+
+# ── Ruby WASM Status (JS) ──
+wasm_step1: "⏳ Loading Ruby 4.0 (1/2)…"
+wasm_step1_fallback: "⏳ Loading Ruby 4.0 (fallback)…"
+wasm_step2: "⏳ Initializing Ruby VM (2/2)…"
+wasm_ready: "✅ Ruby 4.0 Ready"
+wasm_error_prefix: "❌ Load failed:"
+wasm_not_ready: "⏳ Ruby WASM not ready yet, please wait…"
+wasm_no_input: "⚠️ Please enter a Ruby method first!"
+exec_error_prefix: "Error:"
+
+# ── Feedback (JS) ──
+feedback_correct: "Correct!"
+feedback_wrong: "Wrong answer, {n} attempt(s) remaining"
+feedback_attempts_remaining: "{n} left"
+feedback_exhausted: "No attempts left. The answer is:"
+
+# ── Result Phase ──
+result_title: "🎉 Challenge Complete!"
+result_great: "Amazing! {n}/10 — nothing could stop you 🔥"
+result_good: "Got {n}/10 — your Ruby skills are leveling up!"
+result_encourage: "Got {n}/10 — keep it up!"
+result_share_btn: "📲 Share to IG"
+result_download_btn: "⬇️ Download"
+result_tag_reminder: "Remember to tag <strong>@rubytaiwan2008</strong> when you share!"
+result_next_btn: "Continue → Fill in your info to claim the gift"
+
+# ── Canvas Scorecard (fillText) ──
+canvas_top_label: "SITCON 2026 × RUBY TAIWAN"
+canvas_tagline: "Ruby Interactive Alchemy"
+canvas_hashtags: "@rubytaiwan2008  #SITCON2026"
+
+# ── Web Share API ──
+share_title: "Ruby Interactive Alchemy — SITCON 2026"
+share_text: "I completed the Ruby challenge at SITCON 2026! Got {n}/10 @rubytaiwan2008 #SITCON2026 #RubyTaiwan"
+share_filename: "ruby-challenge-sitcon2026.png"
+
+# ── Form Phase ──
+form_title: "📝 Your Info"
+form_subtitle: "Fill this in to claim your booth gift!"
+form_name_label: "Nickname"
+form_name_required: "*"
+form_name_placeholder: "What should we call you?"
+form_email_label: "Email"
+form_email_required: "*"
+form_phone_label: "Phone"
+form_phone_placeholder: "Optional"
+form_school_label: "School / University"
+form_school_placeholder: "Where do you study? (optional)"
+form_ruby_course: "Would your department or club be interested in a free Ruby course?"
+form_message_label: "Anything else to share?"
+form_message_placeholder: "Leave a message (optional)"
+form_submit_btn: "Submit & Finish ✅"
+form_skip_btn: "Skip, show me the completion proof"
+form_submitting: "Submitting…"
+form_validation_error: "Please enter your nickname and email"
+
+# ── Proof Phase ──
+proof_event_label: "SITCON 2026 × RUBY TAIWAN"
+proof_title: "✅ Challenge Complete!"
+proof_show_staff: "🎁 Show this screen to booth staff"
+proof_show_staff_sub: "Complete the booth activity and claim your gift"
+
+# ── Footer ──
+footer_text: "Ruby Taiwan × SITCON 2026 &nbsp;·&nbsp; Powered by Ruby WASM"
+
+# ── AI Prompt ──
+ai_prompt_intro: "I'm learning Ruby and have a practice problem. Please help me using the \"Guided Learning\" approach — don't give me the answer directly, but guide me through questions and progressive hints so I can find the solution myself."
+ai_prompt_category_label: "[Category] "
+ai_prompt_question_label: "[Question] "
+ai_prompt_code_label: "[Current Code]"
+ai_prompt_code_comment: "# ??? is the Ruby method I need to fill in"
+ai_prompt_instruction: "Please start by asking about my initial thoughts, then give progressive hints as needed, and only confirm the answer once you're sure I've truly understood."
+
+# ── Language Switcher ──
+lang_switcher_zh: "中文"
+lang_switcher_en: "EN"
+lang_switcher_ja: "JA"

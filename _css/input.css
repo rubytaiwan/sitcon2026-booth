@@ -4,3 +4,5 @@
 @source "../_layouts/**/*.html";
 @source "../_posts/**/*.{html,md,markdown}";
 @source "../*.{html,md,markdown}";
+@source "../en/**/*.html";
+@source "../ja/**/*.html";

@@ -1,0 +1,267 @@
+# ── Ruby 互動挑戰題庫 ─────────────────────────────────────
+#
+# secret_type 說明：
+#   integer      — 從 secret_range: [min, max] 隨機取整數
+#   odd_integer  — 從 secret_range: [min, max] 隨機取奇數
+#   string       — 從 secret_pool 隨機取字串
+#   array        — 生成 array_length 個整數，範圍 element_range: [min, max]
+#
+# answer  — 正確 Ruby 方法（含前面的點，例如 ".next"）
+# difficulty — easy | medium | hard
+# ─────────────────────────────────────────────────────────
+
+# ── Easy ─────────────────────────────────────────────────
+
+# ── 題目 1：從從容容游刃有餘 ──
+# 梗來源：王世堅金句 ×《沒出息》神曲（2025 爆紅）
+# 玩梗邏輯：「從從容容」= 有序 → .sort 排序
+- category: 陣列操作
+  difficulty: easy
+  secret_type: array
+  array_length: 5
+  element_range: [1, 20]
+  question: "讓 secret 從從容容游刃有餘～（把陣列排好順序）"
+  answer: ".sort"
+  tips:
+    - { code: "[3,1,2].sort", desc: "由小到大排序" }
+    - { code: "[3,1,2].sort.reverse", desc: "由大到小排序" }
+    - { code: "[3,1,2].min", desc: "最小值" }
+    - { code: "[3,1,2].max", desc: "最大值" }
+
+# ── 題目 2：已購買小孩愛吃 ──
+# 梗來源：蝦皮/淘寶評價區經典「已購買小孩愛吃」答非所問式回覆
+# 玩梗邏輯：小孩「吃掉」最後一個 → .pop 取出末尾元素
+- category: 陣列操作
+  difficulty: easy
+  secret_type: array
+  array_length: 4
+  element_range: [1, 9]
+  question: "已購買，小孩愛吃～ 讓 secret 交出最後一個元素"
+  answer: ".pop"
+  tips:
+    - { code: "[1,2,3].pop", desc: "取出最後一個元素" }
+    - { code: "[1,2,3].shift", desc: "取出第一個元素" }
+    - { code: "[1,2,3].last", desc: "查看最後一個（不移除）" }
+    - { code: "[1,2,3].first", desc: "查看第一個（不移除）" }
+
+# ── 題目 3：我裂開了 ──
+# 梗來源：網路流行語「我裂開了」= 心態崩了/碎了，持續活躍於 Z 世代社群
+# 玩梗邏輯：「裂開」= 碎裂拆開 → .chars 把字串拆成字元陣列
+- category: 字串操作
+  difficulty: easy
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, code, wasm]
+  question: "我裂開了！讓 secret 也跟著裂開吧（拆成一個一個字元）"
+  answer: ".chars"
+  tips:
+    - { code: '"hello".chars', desc: "拆成字元陣列" }
+    - { code: '"hello".bytes', desc: "拆成位元組陣列" }
+    - { code: '"hello".length', desc: "字串長度" }
+    - { code: '"hello".reverse', desc: "字串反轉" }
+
+# ── 題目 4：大展鴻圖 ──
+# 梗來源：攬佬《大展鴻圖》2025 畢業季洗腦神曲，學生拍攝舞蹈挑戰影片
+# 玩梗邏輯：「大展鴻圖」= 正面展望/積極向上 → .positive? 是正數嗎
+# 審查備註：原「你很勇喔」帶嘲諷語氣，改為正面積極的「大展鴻圖」
+- category: 數字操作
+  difficulty: easy
+  secret_type: integer
+  secret_range: [1, 100]
+  question: "大展鴻圖！secret 的未來是正面（positive）的嗎？"
+  answer: ".positive?"
+  tips:
+    - { code: "42.positive?", desc: "是正數嗎？" }
+    - { code: "-1.negative?", desc: "是負數嗎？" }
+    - { code: "0.zero?", desc: "是零嗎？" }
+    - { code: "42.even?", desc: "是偶數嗎？" }
+
+# ── 題目 5：誰敢想 ──
+# 梗來源：抖音魔性動畫「誰敢想...誰敢想」2025 年十大社群梗
+# 玩梗邏輯：「誰敢想」= 出乎意料 → 竟然什麼都沒有！→ .empty?
+# 審查備註：用「出乎意料發現是空的」的敘事加強連結
+- category: 字串操作
+  difficulty: easy
+  secret_type: string
+  secret_pool: ["", "ruby", "", "sitcon"]
+  question: "誰敢想... secret 裡面竟然什麼都沒有！確認它是不是空的"
+  answer: ".empty?"
+  tips:
+    - { code: '"".empty?', desc: "空字串 → true" }
+    - { code: '"hello".empty?', desc: "非空 → false" }
+    - { code: "[].empty?", desc: "空陣列 → true" }
+    - { code: '"hello".nil?', desc: "字串不是 nil → false" }
+
+
+### Medium
+
+
+# ── 題目 6：匆匆忙忙連滾帶爬 ──
+# 梗來源：王世堅金句 ×《沒出息》神曲，與題目 1「從從容容 → .sort」成對
+# 玩梗邏輯：從從容容 = .sort（有序），匆匆忙忙 = .shuffle（打亂）——對比雙關
+# 審查備註：明確引用題目 1 的對比關係，讓兩種「亂 vs 序」的雙關更到位
+- category: 陣列操作
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 20]
+  question: "從從容容是 .sort，那匆匆忙忙連滾帶爬呢？（把排好的陣列打亂！）"
+  answer: ".shuffle"
+  tips:
+    - { code: "[1,2,3].shuffle", desc: "隨機打亂" }
+    - { code: "[1,2,3].sort", desc: "排序（從從容容）" }
+    - { code: "[1,2,3].reverse", desc: "反轉" }
+    - { code: "[1,2,3].rotate", desc: "旋轉" }
+
+# ── 題目 7：硬控 ──
+# 梗來源：遊戲術語「硬控」= 強制控制，2024 年度流行語 TOP 10，2025 仍活躍
+# 玩梗邏輯：「硬控」= 完全無法行動/被凍結 → .freeze 凍結物件使其不可修改
+# 審查備註：語意對應最強的組合，「控住 = 凍結」直覺到位
+- category: 物件操作
+  difficulty: medium
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, hello, world]
+  question: "對 secret 施展硬控！凍結它，讓它再也動不了"
+  answer: ".freeze"
+  tips:
+    - { code: '"hello".freeze', desc: "凍結字串" }
+    - { code: '"hello".frozen?', desc: "檢查是否凍結" }
+    - { code: '"hello".dup', desc: "複製（可解除凍結）" }
+    - { code: "42.frozen?", desc: "數字天生是 frozen" }
+
+# ── 題目 8：上車舞 ──
+# 梗來源：2025/9 抖音直播「上車舞」席捲台灣，台灣網友惡搞引發抖音下禁令
+# 玩梗邏輯：「排隊上車」→ 第一個排到最後面 → .rotate 旋轉陣列元素位置
+# 審查備註：改用「排隊上車」意象（而非轉圈），讓 rotate 的行為更直覺
+- category: 陣列操作
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 9]
+  question: "上車嘍～ secret 排隊上車，第一位請到最後面排隊！"
+  answer: ".rotate"
+  tips:
+    - { code: "[1,2,3].rotate", desc: "旋轉一位" }
+    - { code: "[1,2,3].rotate(2)", desc: "旋轉兩位" }
+    - { code: "[1,2,3].reverse", desc: "反轉" }
+    - { code: "[1,2,3].shuffle", desc: "隨機打亂" }
+
+# ── 題目 9：《沒出息》歸零 ──
+# 梗來源：《沒出息》神曲（王搏 × 王世堅金句改編），2025 現象級爆紅
+# 玩梗邏輯：歌曲自嘲「歸零」→ .zero? 檢查是否為零
+# 審查備註：以引用歌曲自嘲的方式呈現，避免「沒出息」直接指向玩家
+- category: 數字操作
+  difficulty: medium
+  secret_type: integer
+  secret_range: [0, 0]
+  question: "就像《沒出息》唱的那樣～ secret 是不是歸零了？"
+  answer: ".zero?"
+  tips:
+    - { code: "0.zero?", desc: "是零 → true" }
+    - { code: "42.zero?", desc: "不是零 → false" }
+    - { code: "0.nil?", desc: "零不是 nil → false" }
+    - { code: "0.positive?", desc: "零不是正數 → false" }
+
+# ── 題目 10：抽卡 ──
+# 梗來源：手遊抽卡/轉蛋文化（gacha），SITCON 資訊學生與遊戲玩家高度重疊
+# 玩梗邏輯：「抽卡」= 從卡池隨機抽 → .sample 從陣列隨機取一個（陣列=卡池）
+# 審查備註：語意完全對應，SITCON 受眾辨識度極高
+- category: 陣列操作
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 99]
+  question: "抽卡時間到！從 secret 卡池裡隨機抽一張，看看手氣如何"
+  answer: ".sample"
+  tips:
+    - { code: "[1,2,3].sample", desc: "隨機取一個" }
+    - { code: "[1,2,3].sample(2)", desc: "隨機取兩個" }
+    - { code: "[1,2,3].shuffle", desc: "全部打亂" }
+    - { code: "[1,2,3].first", desc: "取第一個" }
+
+
+### Hard
+
+
+# ── 題目 11：作業借我抄 ──
+# 梗來源：大學生經典日常「作業借我抄/Ctrl+C Ctrl+V」，跨世代共鳴
+# 玩梗邏輯：「抄作業」= 複製一份 → .dup 複製物件
+# 審查備註：原「二創」語意是再創作≠複製，改為「抄作業」更精準對應 .dup
+- category: 物件操作
+  difficulty: hard
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, kaigi]
+  question: "同學，作業借我抄一下！幫 secret 複製一份獨立的物件出來"
+  answer: ".dup"
+  tips:
+    - { code: '"hello".dup', desc: "複製物件" }
+    - { code: '"hello".clone', desc: "深層複製（含凍結狀態）" }
+    - { code: '"hello".freeze', desc: "凍結物件" }
+    - { code: '"hello".object_id', desc: "物件的唯一識別碼" }
+
+# ── 題目 12：負能量轉正 ──
+# 梗來源：「負能量」是台灣年輕人常用自嘲詞彙，社畜/學生日常
+# 玩梗邏輯：負能量太重 → .abs 強制轉正（負數→正數＝負能量→正能量）
+# 審查備註：原「觸底反彈」不夠 meme 感，改為「負能量轉正」更貼近學生日常
+- category: 數字操作
+  difficulty: hard
+  secret_type: integer
+  secret_range: [-99, -1]
+  question: "期中考 secret 分的心情好負面，想辦法把它強制轉成正能量！"
+  answer: ".abs"
+  tips:
+    - { code: "(-42).abs", desc: "取絕對值 → 42" }
+    - { code: "-42.negative?", desc: "是負數嗎？" }
+    - { code: "42.positive?", desc: "是正數嗎？" }
+    - { code: "(-42) * -1", desc: "乘以 -1 也能翻正" }
+
+# ── 題目 13：Look in my eyes ──
+# 梗來源：遊戲直播主「小明劍魔」金句爆紅，英文老師跟風教學版本廣傳
+# 玩梗邏輯：「Look in my eyes」= 仔細看 → .inspect 檢視物件內部表示
+# 審查備註：移除「回答我！」逼問語氣，改為輕鬆好奇的邀請式語調
+- category: 物件操作
+  difficulty: hard
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, kaigi]
+  question: "Look in my eyes～ 來，仔細看看 secret 的真面目吧"
+  answer: ".inspect"
+  tips:
+    - { code: '"hello".inspect', desc: '→ "\"hello\""' }
+    - { code: "42.inspect", desc: '→ "42"' }
+    - { code: "[1,2].inspect", desc: '→ "[1, 2]"' }
+    - { code: "nil.inspect", desc: '→ "nil"' }
+
+# ── 題目 14：露比醬～嗨！──
+# 梗來源：Love Live! AiScReam〈愛スクリーム！〉2025 十大社群迷因
+# 玩梗邏輯：「露比醬」= Ruby-chan，Ruby 的名字 → 把字串變成 Symbol（象徵）
+# 審查備註：包容性安全，調性可愛正面，加強 Ruby → Symbol 的引導
+- category: 型別探索
+  difficulty: hard
+  secret_type: string
+  secret_pool: [ruby, love, live, idol]
+  question: "露比醬～嗨！在 Ruby 的世界裡，字串也能變成象徵（Symbol）喔"
+  answer: ".to_sym"
+  tips:
+    - { code: '"hello".to_sym', desc: "字串 → Symbol" }
+    - { code: ":hello.to_s", desc: "Symbol → 字串" }
+    - { code: '"hello".class', desc: "→ String" }
+    - { code: ":hello.class", desc: "→ Symbol" }
+
+# ── 題目 15：躺平休息一下 ──
+# 梗來源：「躺平」流行語，台灣學生間廣泛認知
+# 玩梗邏輯：「躺平」= 攤平 → .flatten 把巢狀陣列攤平成一維
+# 審查備註：以「休息一下」的輕鬆語調呈現，避免對生活態度的價值判斷
+# 注意：需要系統支援巢狀陣列的 secret_type
+- category: 陣列操作
+  difficulty: hard
+  secret_type: nested_array
+  secret_pool:
+    - [[1, 2], [3, [4, 5]], [6]]
+    - [[7, [8]], [9, 10], [[11]]]
+    - [[1], [2, [3, [4]]], [5]]
+  question: "累了嗎？讓 secret 也躺平，攤成一條直線休息一下吧"
+  answer: ".flatten"
+  tips:
+    - { code: "[[1,2],[3,4]].flatten", desc: "攤平巢狀陣列" }
+    - { code: "[[1,[2]],3].flatten(1)", desc: "只攤平一層" }
+    - { code: "[1,2,3].compact", desc: "移除 nil 元素" }
+    - { code: "[1,[2,3]].first", desc: "取第一個元素" }

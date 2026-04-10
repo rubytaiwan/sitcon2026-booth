@@ -1,0 +1,219 @@
+# ── Ruby インタラクティブ チャレンジ問題集（日本語）──────────
+#
+# 日本のネット文化に合わせて問題文を改変。
+# answer, secret_type, difficulty, tips[].code は変更なし。
+# 翻訳・改変対象: question, category, tips[].desc のみ。
+# ─────────────────────────────────────────────────────────────
+
+# ── Easy ─────────────────────────────────────────────────────
+
+# Task 1: Sort
+- category: 配列操作
+  difficulty: easy
+  secret_type: array
+  array_length: 5
+  element_range: [1, 20]
+  question: "整列！secret を小さい順に並べてください。"
+  answer: ".sort"
+  tips:
+    - { code: "[3,1,2].sort", desc: "昇順ソート" }
+    - { code: "[3,1,2].sort.reverse", desc: "降順ソート" }
+    - { code: "[3,1,2].min", desc: "最小値" }
+    - { code: "[3,1,2].max", desc: "最大値" }
+
+# Task 2: Pop
+- category: 配列操作
+  difficulty: easy
+  secret_type: array
+  array_length: 4
+  element_range: [1, 9]
+  question: "最後の一個！secret の末尾の要素を取り出してください。"
+  answer: ".pop"
+  tips:
+    - { code: "[1,2,3].pop", desc: "末尾の要素を取り出す" }
+    - { code: "[1,2,3].shift", desc: "先頭の要素を取り出す" }
+    - { code: "[1,2,3].last", desc: "末尾を確認（削除なし）" }
+    - { code: "[1,2,3].first", desc: "先頭を確認（削除なし）" }
+
+# Task 3: Chars
+- category: 文字列操作
+  difficulty: easy
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, code, wasm]
+  question: "バラバラに！secret を一文字ずつ分解してください。"
+  answer: ".chars"
+  tips:
+    - { code: '"hello".chars', desc: "文字の配列に分解" }
+    - { code: '"hello".bytes', desc: "バイトの配列に分解" }
+    - { code: '"hello".length', desc: "文字列の長さ" }
+    - { code: '"hello".reverse', desc: "文字列を逆順にする" }
+
+# Task 4: Positive?
+- category: 数値操作
+  difficulty: easy
+  secret_type: integer
+  secret_range: [1, 100]
+  question: "ポジティブチェック！secret はプラスの数ですか？"
+  answer: ".positive?"
+  tips:
+    - { code: "42.positive?", desc: "正の数か？" }
+    - { code: "-1.negative?", desc: "負の数か？" }
+    - { code: "0.zero?", desc: "ゼロか？" }
+    - { code: "42.even?", desc: "偶数か？" }
+
+# Task 5: Empty?
+- category: 文字列操作
+  difficulty: easy
+  secret_type: string
+  secret_pool: ["", "ruby", "", "sitcon"]
+  question: "からっぽ？ secret の中に何も入っていないか確認してください。"
+  answer: ".empty?"
+  tips:
+    - { code: '"".empty?', desc: "空文字列 → true" }
+    - { code: '"hello".empty?', desc: "空でない → false" }
+    - { code: "[].empty?", desc: "空配列 → true" }
+    - { code: '"hello".nil?', desc: "文字列は nil ではない → false" }
+
+
+### Medium
+
+
+# Task 6: Shuffle
+- category: 配列操作
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 20]
+  question: "シャッフル！secret の要素をランダムに並び替えてください。"
+  answer: ".shuffle"
+  tips:
+    - { code: "[1,2,3].shuffle", desc: "ランダムに並び替え" }
+    - { code: "[1,2,3].sort", desc: "昇順ソート" }
+    - { code: "[1,2,3].reverse", desc: "逆順にする" }
+    - { code: "[1,2,3].rotate", desc: "ローテーション" }
+
+# Task 7: Freeze
+- category: オブジェクト操作
+  difficulty: medium
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, hello, world]
+  question: "凍結！secret を変更できないように固めてください。"
+  answer: ".freeze"
+  tips:
+    - { code: '"hello".freeze', desc: "文字列を凍結する" }
+    - { code: '"hello".frozen?', desc: "凍結されているか確認" }
+    - { code: '"hello".dup', desc: "複製（凍結解除）" }
+    - { code: "42.frozen?", desc: "数値は常に frozen" }
+
+# Task 8: Rotate
+- category: 配列操作
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 9]
+  question: "ローテーション！secret の先頭の要素を末尾に移動してください。"
+  answer: ".rotate"
+  tips:
+    - { code: "[1,2,3].rotate", desc: "1つローテーション" }
+    - { code: "[1,2,3].rotate(2)", desc: "2つローテーション" }
+    - { code: "[1,2,3].reverse", desc: "逆順にする" }
+    - { code: "[1,2,3].shuffle", desc: "ランダムに並び替え" }
+
+# Task 9: Zero?
+- category: 数値操作
+  difficulty: medium
+  secret_type: integer
+  secret_range: [0, 0]
+  question: "ゼロチェック！secret はゼロですか？"
+  answer: ".zero?"
+  tips:
+    - { code: "0.zero?", desc: "ゼロ → true" }
+    - { code: "42.zero?", desc: "ゼロでない → false" }
+    - { code: "0.nil?", desc: "ゼロは nil ではない → false" }
+    - { code: "0.positive?", desc: "ゼロは正の数ではない → false" }
+
+# Task 10: Sample
+- category: 配列操作
+  difficulty: medium
+  secret_type: array
+  array_length: 5
+  element_range: [1, 99]
+  question: "ガチャタイム！secret の中からランダムに1つ引いてください。"
+  answer: ".sample"
+  tips:
+    - { code: "[1,2,3].sample", desc: "ランダムに1つ取得" }
+    - { code: "[1,2,3].sample(2)", desc: "ランダムに2つ取得" }
+    - { code: "[1,2,3].shuffle", desc: "全部シャッフル" }
+    - { code: "[1,2,3].first", desc: "先頭の要素を取得" }
+
+
+### Hard
+
+
+# Task 11: Dup
+- category: オブジェクト操作
+  difficulty: hard
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, kaigi]
+  question: "コピー！secret の独立した複製を作ってください。"
+  answer: ".dup"
+  tips:
+    - { code: '"hello".dup', desc: "オブジェクトを複製" }
+    - { code: '"hello".clone', desc: "深いコピー（frozen状態も保持）" }
+    - { code: '"hello".freeze', desc: "オブジェクトを凍結" }
+    - { code: '"hello".object_id', desc: "オブジェクトの識別子" }
+
+# Task 12: Abs
+- category: 数値操作
+  difficulty: hard
+  secret_type: integer
+  secret_range: [-99, -1]
+  question: "マイナスをプラスに！secret の絶対値を求めてください。"
+  answer: ".abs"
+  tips:
+    - { code: "(-42).abs", desc: "絶対値 → 42" }
+    - { code: "-42.negative?", desc: "負の数か？" }
+    - { code: "42.positive?", desc: "正の数か？" }
+    - { code: "(-42) * -1", desc: "-1 を掛けても正になる" }
+
+# Task 13: Inspect
+- category: オブジェクト操作
+  difficulty: hard
+  secret_type: string
+  secret_pool: [ruby, sitcon, meme, kaigi]
+  question: "よく見て！secret のオブジェクト表現を確認してください。"
+  answer: ".inspect"
+  tips:
+    - { code: '"hello".inspect', desc: '→ "\"hello\""' }
+    - { code: "42.inspect", desc: '→ "42"' }
+    - { code: "[1,2].inspect", desc: '→ "[1, 2]"' }
+    - { code: "nil.inspect", desc: '→ "nil"' }
+
+# Task 14: To_sym
+- category: 型変換
+  difficulty: hard
+  secret_type: string
+  secret_pool: [ruby, love, live, idol]
+  question: "シンボルに変換！secret を文字列からシンボルに変えてください。"
+  answer: ".to_sym"
+  tips:
+    - { code: '"hello".to_sym', desc: "文字列 → シンボル" }
+    - { code: ":hello.to_s", desc: "シンボル → 文字列" }
+    - { code: '"hello".class', desc: "→ String" }
+    - { code: ":hello.class", desc: "→ Symbol" }
+
+# Task 15: Flatten
+- category: 配列操作
+  difficulty: hard
+  secret_type: nested_array
+  secret_pool:
+    - [[1, 2], [3, [4, 5]], [6]]
+    - [[7, [8]], [9, 10], [[11]]]
+    - [[1], [2, [3, [4]]], [5]]
+  question: "平らに！secret のネストされた配列を1次元に展開してください。"
+  answer: ".flatten"
+  tips:
+    - { code: "[[1,2],[3,4]].flatten", desc: "ネスト配列を展開" }
+    - { code: "[[1,[2]],3].flatten(1)", desc: "1階層だけ展開" }
+    - { code: "[1,2,3].compact", desc: "nil要素を削除" }
+    - { code: "[1,[2,3]].first", desc: "先頭の要素を取得" }

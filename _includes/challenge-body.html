@@ -1,0 +1,968 @@
+{% assign t = site.data.locales[page.lang] %}
+
+{% include cover.html %}
+
+<!-- ===== Challenge Section ===== -->
+<main id="challenge" style="background: #fef6f0; position: relative; z-index: 1; padding-top: 60px; padding-bottom: 80px;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+
+    <!-- Section Header -->
+    <div style="text-align: center; margin-bottom: 32px;">
+      <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: #bd3f32; font-weight: 600; margin: 0 0 8px;">{{ t.header_tag }}</p>
+      <h2 style="font-size: 28px; font-weight: 700; color: #323232; margin: 0 0 8px;">{{ t.header_title }}</h2>
+      <p style="color: #555; font-size: 15px; margin: 0;">{{ t.header_subtitle }}</p>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PHASE QUIZ
+         ══════════════════════════════════════════ -->
+    <div id="phase-quiz">
+
+      <!-- Progress Bar -->
+      <div style="background: #fff; border: 1px solid #e8d5d3; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span id="progress-text" style="font-size: 13px; font-weight: 600; color: #323232;">{{ t.quiz_progress_init }}</span>
+          <span id="score-text" style="font-size: 13px; color: #16a34a; font-weight: 600;">{{ t.quiz_score_init }}</span>
+        </div>
+        <div style="background: #e8d5d3; border-radius: 4px; height: 8px; overflow: hidden;">
+          <div id="progress-fill" style="background: linear-gradient(90deg, #bd3f32, #e05a4b); height: 100%; width: 10%; transition: width 0.4s ease; border-radius: 4px;"></div>
+        </div>
+      </div>
+
+      <!-- Two-column layout -->
+      <div style="display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap;">
+
+        <!-- ===== LEFT COLUMN ===== -->
+        <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 20px;">
+
+          <!-- Task Card -->
+          <div id="task-card" style="background: #fff; border: 1px solid #e8d5d3; border-radius: 12px; padding: 20px 24px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <div style="width: 24px; height: 24px; background: #bd3f32; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <span style="color: #fff; font-size: 12px; font-weight: 700;">#</span>
+              </div>
+              <span id="task-category" style="font-size: 13px; font-weight: 600; color: #323232;">數字操作</span>
+              <span id="difficulty-badge" style="margin-left: 4px; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #dcfce7; color: #16a34a;">Easy</span>
+              <div style="margin-left: auto;">
+                <span id="attempts-badge" style="font-size: 11px; color: #9b9b9b;"></span>
+              </div>
+            </div>
+            <p id="task-question" style="font-size: 15px; color: #323232; margin: 0 0 10px; font-weight: 500;">{{ t.quiz_loading }}</p>
+            <pre id="task-code" style="font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 13px; color: #555; background: #fef6f0; border-radius: 6px; padding: 12px; margin: 0; line-height: 1.7; overflow-x: auto;"></pre>
+          </div>
+
+          <!-- Code Editor (Carbon style) -->
+          <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(50,50,50,0.12);">
+            <div style="background: #2d2d3f; padding: 0 16px; height: 40px; display: flex; align-items: center; gap: 8px;">
+              <span style="width: 12px; height: 12px; background: #ff5f57; border-radius: 50%; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; background: #febc2e; border-radius: 50%; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; background: #28c840; border-radius: 50%; display: inline-block;"></span>
+              <span style="color: #7a6a78; font-size: 12px; font-family: monospace; margin: 0 auto;">challenge.rb</span>
+            </div>
+            <div style="background: #1e1e2e; padding: 16px 0; display: flex;">
+              <div style="width: 44px; padding: 0 0 0 16px; text-align: right; flex-shrink: 0;">
+                <div id="line-nums" style="font-family: monospace; font-size: 13px; color: #4a3a48; line-height: 26px; user-select: none;"></div>
+              </div>
+              <div style="padding: 0 16px; flex: 1; min-width: 0;">
+                <div id="code-display" style="font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 13px; color: #e8d5d3; line-height: 26px;"></div>
+                <div style="display: flex; align-items: center; height: 26px; margin-top: 0;">
+                  <span id="input-prefix" style="font-family: monospace; font-size: 13px; color: #e8d5d3; white-space: pre; flex-shrink: 0;"></span>
+                  <input
+                    id="method-input"
+                    type="text"
+                    placeholder="{{ t.quiz_input_placeholder }}"
+                    style="background: transparent; border: none; outline: none; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 13px; color: #bd3f32; caret-color: #bd3f32; flex: 1; min-width: 80px;"
+                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <button
+              id="run-btn"
+              onclick="runRuby()"
+              style="background: #bd3f32; color: #fff; border: none; border-radius: 8px; padding: 12px 28px; font-size: 14px; font-weight: 600; font-family: Montserrat, sans-serif; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.2s;"
+              onmouseover="this.style.background='#a03228'" onmouseout="this.style.background='#bd3f32'"
+            >
+              {{ t.quiz_run_btn }}
+            </button>
+            <button
+              id="ask-ai-btn"
+              onclick="askAI()"
+              style="background: #fff; color: #6d28d9; border: 1px solid #7c3aed; border-radius: 8px; padding: 12px 20px; font-size: 14px; font-family: Montserrat, sans-serif; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;"
+              onmouseover="this.style.background='#f5f3ff'" onmouseout="this.style.background='#fff'"
+            >
+              {{ t.quiz_ask_ai_btn }}
+            </button>
+            <span id="ruby-status" style="font-size: 12px; color: #9b9b9b; font-family: monospace; margin-left: auto;">{{ t.quiz_wasm_status_init }}</span>
+          </div>
+
+          <!-- Output Console -->
+          <div style="border-radius: 12px; overflow: hidden;">
+            <div style="background: #2d2d3f; padding: 0 16px; height: 36px; display: flex; align-items: center;">
+              <span style="font-family: monospace; font-size: 11px; letter-spacing: 1.5px; color: #bd3f32; font-weight: 600;">// OUTPUT</span>
+            </div>
+            <div id="output-body" style="background: #1e1e2e; padding: 14px 16px; min-height: 60px; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 14px; color: #9b8fa0; line-height: 1.6;">
+              <span style="color: #4a3a48;">{{ t.quiz_output_waiting }}</span>
+            </div>
+          </div>
+
+          <!-- Feedback Panel (answer reveal etc.) -->
+          <div id="feedback-panel" style="display: none;"></div>
+
+        </div><!-- end left column -->
+
+        <!-- ===== RIGHT COLUMN: Tips ===== -->
+        <div style="width: 300px; flex-shrink: 0;">
+          <div style="background: #fff; border: 1px solid #e8d5d3; border-radius: 12px; padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+              <span style="font-size: 16px;">💡</span>
+              <span style="font-size: 14px; font-weight: 700; color: #323232;">{{ t.quiz_tips_title }}</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;" id="tips-list"></div>
+          </div>
+
+          <!-- Ruby WASM badge -->
+          <div style="margin-top: 16px; background: #fde8e7; border-radius: 12px; padding: 16px 20px; text-align: center;">
+            <p style="font-size: 11px; color: #bd3f32; font-weight: 600; letter-spacing: 1px; margin: 0 0 4px; font-family: monospace;">{{ t.quiz_powered_by }}</p>
+            <p style="font-size: 14px; font-weight: 700; color: #323232; margin: 0;">{{ t.quiz_powered_by_name }}</p>
+            <p style="font-size: 11px; color: #9b9b9b; margin: 4px 0 0;">{{ t.quiz_powered_by_desc }}</p>
+          </div>
+        </div><!-- end right column -->
+
+      </div><!-- end two-column layout -->
+    </div><!-- end phase-quiz -->
+
+    <!-- ══════════════════════════════════════════
+         PHASE RESULT
+         ══════════════════════════════════════════ -->
+    <div id="phase-result" style="display: none; max-width: 540px; margin: 0 auto; text-align: center;">
+      <h2 style="font-size: 28px; font-weight: 700; color: #323232; margin: 0 0 4px;">{{ t.result_title }}</h2>
+      <p id="result-subtitle" style="font-size: 16px; color: #555; margin: 0 0 24px;"></p>
+
+      <!-- Canvas scorecard -->
+      <canvas id="share-canvas" width="1080" height="1080"
+        style="max-width: 100%; border-radius: 16px; box-shadow: 0 8px 32px rgba(50,50,50,0.18); display: block; margin: 0 auto 20px;">
+      </canvas>
+
+      <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap;">
+        <button
+          id="share-btn"
+          onclick="shareScoreCard()"
+          style="background: #bd3f32; color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 14px; font-weight: 600; font-family: Montserrat, sans-serif; cursor: pointer;"
+        >{{ t.result_share_btn }}</button>
+        <button
+          onclick="downloadCanvas()"
+          style="background: #fff; color: #bd3f32; border: 1px solid #bd3f32; border-radius: 8px; padding: 12px 24px; font-size: 14px; font-family: Montserrat, sans-serif; cursor: pointer;"
+        >{{ t.result_download_btn }}</button>
+      </div>
+      <p style="font-size: 12px; color: #9b9b9b; margin: 0 0 32px;">{{ t.result_tag_reminder }}</p>
+
+      <button
+        onclick="switchPhase('form')"
+        style="background: #323232; color: #fff; border: none; border-radius: 8px; padding: 14px 36px; font-size: 15px; font-weight: 600; font-family: Montserrat, sans-serif; cursor: pointer; width: 100%;"
+      >{{ t.result_next_btn }}</button>
+    </div><!-- end phase-result -->
+
+    <!-- ══════════════════════════════════════════
+         PHASE FORM
+         ══════════════════════════════════════════ -->
+    <div id="phase-form" style="display: none; max-width: 420px; margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 28px;">
+        <h2 style="font-size: 24px; font-weight: 700; color: #323232; margin: 0 0 8px;">{{ t.form_title }}</h2>
+        <p style="font-size: 14px; color: #555; margin: 0;">{{ t.form_subtitle }}</p>
+      </div>
+
+      <div style="background: #fff; border: 1px solid #e8d5d3; border-radius: 16px; padding: 28px;">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #323232; display: block; margin-bottom: 6px;">{{ t.form_name_label }} <span style="color: #bd3f32;">{{ t.form_name_required }}</span></label>
+            <input id="form-name" type="text" placeholder="{{ t.form_name_placeholder }}"
+              style="width: 100%; box-sizing: border-box; border: 1px solid #e8d5d3; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: Montserrat, sans-serif; outline: none;"
+              onfocus="this.style.borderColor='#bd3f32'" onblur="this.style.borderColor='#e8d5d3'"
+            >
+          </div>
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #323232; display: block; margin-bottom: 6px;">{{ t.form_email_label }} <span style="color: #bd3f32;">{{ t.form_email_required }}</span></label>
+            <input id="form-email" type="email" placeholder="your@email.com"
+              style="width: 100%; box-sizing: border-box; border: 1px solid #e8d5d3; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: Montserrat, sans-serif; outline: none;"
+              onfocus="this.style.borderColor='#bd3f32'" onblur="this.style.borderColor='#e8d5d3'"
+            >
+          </div>
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #323232; display: block; margin-bottom: 6px;">{{ t.form_phone_label }}</label>
+            <input id="form-phone" type="tel" placeholder="{{ t.form_phone_placeholder }}"
+              style="width: 100%; box-sizing: border-box; border: 1px solid #e8d5d3; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: Montserrat, sans-serif; outline: none;"
+              onfocus="this.style.borderColor='#bd3f32'" onblur="this.style.borderColor='#e8d5d3'"
+            >
+          </div>
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #323232; display: block; margin-bottom: 6px;">{{ t.form_school_label }}</label>
+            <input id="form-school" type="text" placeholder="{{ t.form_school_placeholder }}"
+              style="width: 100%; box-sizing: border-box; border: 1px solid #e8d5d3; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: Montserrat, sans-serif; outline: none;"
+              onfocus="this.style.borderColor='#bd3f32'" onblur="this.style.borderColor='#e8d5d3'"
+            >
+          </div>
+          <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13px; color: #555;">
+            <input id="form-ruby-course" type="checkbox" style="width: 16px; height: 16px; accent-color: #bd3f32; margin-top: 1px; flex-shrink: 0;">
+            {{ t.form_ruby_course }}
+          </label>
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #323232; display: block; margin-bottom: 6px;">{{ t.form_message_label }}</label>
+            <textarea id="form-message" placeholder="{{ t.form_message_placeholder }}" rows="3"
+              style="width: 100%; box-sizing: border-box; border: 1px solid #e8d5d3; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: Montserrat, sans-serif; outline: none; resize: vertical;"
+              onfocus="this.style.borderColor='#bd3f32'" onblur="this.style.borderColor='#e8d5d3'"
+            ></textarea>
+          </div>
+        </div>
+
+        <button
+          id="form-submit-btn"
+          onclick="submitForm()"
+          style="margin-top: 24px; width: 100%; background: #bd3f32; color: #fff; border: none; border-radius: 8px; padding: 14px; font-size: 15px; font-weight: 600; font-family: Montserrat, sans-serif; cursor: pointer;"
+        >{{ t.form_submit_btn }}</button>
+
+        <button
+          onclick="switchPhase('proof')"
+          style="margin-top: 10px; width: 100%; background: transparent; color: #9b9b9b; border: none; padding: 8px; font-size: 13px; font-family: Montserrat, sans-serif; cursor: pointer; text-decoration: underline;"
+        >{{ t.form_skip_btn }}</button>
+      </div>
+    </div><!-- end phase-form -->
+
+    <!-- ══════════════════════════════════════════
+         PHASE PROOF
+         ══════════════════════════════════════════ -->
+    <div id="phase-proof" style="display: none; max-width: 420px; margin: 0 auto;">
+      <div style="position: relative; background: linear-gradient(135deg, #bd3f32 0%, #8b2920 100%); border-radius: 20px; padding: 40px 28px; color: #fff; text-align: center; overflow: hidden;">
+        <!-- Animated shimmer background -->
+        <div id="proof-shimmer" style="position: absolute; inset: 0; pointer-events: none; background: linear-gradient(270deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: proof-shimmer 2.5s ease-in-out infinite;"></div>
+
+        <p style="font-size: 12px; letter-spacing: 3px; opacity: 0.7; margin: 0 0 4px; font-family: monospace;">{{ t.proof_event_label }}</p>
+        <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 4px;">{{ t.proof_title }}</h2>
+        <p id="proof-name" style="font-size: 18px; font-weight: 600; margin: 0 0 16px; opacity: 0.9;"></p>
+
+        <div style="font-size: 52px; font-weight: 800; margin: 0 0 20px; line-height: 1;">
+          <span id="proof-score">0</span>
+          <span style="font-size: 24px; opacity: 0.7;"> / 10</span>
+        </div>
+
+        <!-- QR Code -->
+        <div id="proof-qrcode" style="background: #fff; border-radius: 12px; padding: 14px; display: inline-block; margin-bottom: 16px;"></div>
+
+        <!-- Proof Code -->
+        <p id="proof-code" style="font-family: monospace; font-size: 16px; letter-spacing: 2px; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 16px; margin: 0 0 8px; word-break: break-all;"></p>
+        <p id="proof-time" style="font-size: 11px; opacity: 0.6; margin: 0 0 28px; font-family: monospace;"></p>
+
+        <div style="background: rgba(255,255,255,0.15); border-radius: 12px; padding: 14px 20px;">
+          <p style="font-size: 15px; font-weight: 700; margin: 0;">{{ t.proof_show_staff }}</p>
+          <p style="font-size: 12px; opacity: 0.8; margin: 6px 0 0;">{{ t.proof_show_staff_sub }}</p>
+        </div>
+      </div>
+
+      <!-- Live clock (anti-screenshot) -->
+      <p id="proof-live-time" style="text-align: center; font-size: 12px; color: #9b9b9b; margin-top: 12px; font-family: monospace;"></p>
+    </div><!-- end phase-proof -->
+
+  </div>
+</main>
+
+<!-- Shimmer animation CSS -->
+<style>
+@keyframes proof-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+</style>
+
+<!-- Footer -->
+<footer style="background: #323232; padding: 20px 24px; text-align: center;">
+  <p style="font-family: monospace; font-size: 12px; color: #9b9b9b; margin: 0;">
+    {{ t.footer_text }}
+  </p>
+</footer>
+
+<!-- ===== Ruby WASM + 4-Phase Challenge Logic ===== -->
+<script type="module">
+
+// ── i18n UI 字串（從 _data/locales/[lang].yml 注入）────────
+const UI = {{ site.data.locales[page.lang] | jsonify }};
+const PAGE_LANG = '{{ page.lang }}';
+
+// 插值 helper：t(UI.key, { n: value })
+function tpl(template, vars) {
+  return template.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
+}
+
+// ── 設定 ─────────────────────────────────────────────────
+const TOTAL_QUESTIONS = 10;
+const MAX_ATTEMPTS    = 3;
+const SALT            = 'SITCON2026RubyTaiwan';
+
+// listmonk 設定（部署在 edm.ruby.tw/sitcon2026 時同 origin，無 CORS 問題）
+const SUBMIT_URL         = '{{ site.listmonk_submit_url }}';
+const LISTMONK_LIST_UUID = '{{ site.listmonk_list_uuid }}';
+
+// ── 題目定義 — 從 _data/tasks/[lang].yml 注入 ─────────────
+const TASK_DEFS = {{ site.data.tasks[page.lang] | jsonify }};
+
+// ── answer → JS 計算函數映射（不用 eval）───────────────────
+// 注意：puts 對陣列的輸出是每個元素各自一行（\n 分隔），不是 [a, b, c] 格式
+const EXPECTED_MAP = {
+  '.next':       (v) => String(Number(v) + 1),
+  '.pred':       (v) => String(Number(v) - 1),
+  '.abs':        (v) => String(Math.abs(Number(v))),
+  '.to_i':       (v) => String(parseInt(v)),
+  '.to_f':       (v) => { const f = parseFloat(v); return Number.isInteger(f) ? f.toFixed(1) : String(f); },
+  '.to_s':       (v) => String(v),
+  '.upcase':     (v) => v.toUpperCase(),
+  '.downcase':   (v) => v.toLowerCase(),
+  '.reverse':    (v) => Array.isArray(v) ? v.slice().reverse().join('\n') : v.split('').reverse().join(''),
+  '.length':     (v) => String(Array.isArray(v) ? v.length : String(v).length),
+  '.size':       (v) => String(Array.isArray(v) ? v.length : String(v).length),
+  '.capitalize': (v) => v.charAt(0).toUpperCase() + v.slice(1).toLowerCase(),
+  '.swapcase':   (v) => v.split('').map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join(''),
+  '.strip':      (v) => v.trim(),
+  '.lstrip':     (v) => v.trimStart(),
+  '.rstrip':     (v) => v.trimEnd(),
+  '.sum':        (v) => String(v.reduce((a, b) => a + b, 0)),
+  '.min':        (v) => String(Math.min(...v)),
+  '.max':        (v) => String(Math.max(...v)),
+  '.first':      (v) => String(v[0]),
+  '.last':       (v) => String(v[v.length - 1]),
+  '.sort':       (v) => v.slice().sort((a, b) => a - b).join('\n'),
+  '.uniq':       (v) => [...new Set(v)].join('\n'),
+  '.count':      (v) => String(v.length),
+  '.odd?':       (v) => String(Number(v) % 2 !== 0),
+  '.even?':      (v) => String(Number(v) % 2 === 0),
+  '.zero?':      (v) => String(Number(v) === 0),
+  '.positive?':  (v) => String(Number(v) > 0),
+  '.negative?':  (v) => String(Number(v) < 0),
+  '.nil?':       (_) => 'false',
+  '.frozen?':    (_) => 'false',
+  '.class':      (v) => Array.isArray(v) ? 'Array' : typeof v === 'number' ? 'Integer' : 'String',
+  '* 2':         (v) => String(Number(v) * 2),
+  // ── 新增（tasks.yml 更新後需要）──────────────────────────
+  '.pop':        (v) => String(v[v.length - 1]),
+  '.shift':      (v) => String(v[0]),
+  '.chars':      (v) => v.split('').join('\n'),
+  '.empty?':     (v) => String((Array.isArray(v) ? v.length : String(v).length) === 0),
+  '.freeze':     (v) => String(v),
+  '.dup':        (v) => String(v),
+  '.to_sym':     (v) => String(v),
+  '.rotate':     (v) => [...v.slice(1), v[0]].join('\n'),
+  '.inspect':    (v) => {
+    if (Array.isArray(v)) return '[' + v.map(x => typeof x === 'string' ? '"' + x + '"' : x).join(', ') + ']';
+    if (typeof v === 'number') return String(v);
+    return '"' + v + '"';
+  },
+  '.flatten':    (v) => Array.isArray(v) ? v.flat(Infinity).join('\n') : String(v),
+};
+
+// ── secret 生成 ──────────────────────────────────────────
+function generateSecret(def) {
+  switch (def.secret_type) {
+    case 'integer': {
+      const [min, max] = def.secret_range;
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    case 'odd_integer': {
+      const [min, max] = def.secret_range;
+      let n = Math.floor(Math.random() * (max - min + 1)) + min;
+      if (n % 2 === 0) n = n + 1 <= max ? n + 1 : n - 1;
+      return n;
+    }
+    case 'string': {
+      const pool = def.secret_pool;
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+    case 'array': {
+      const [eMin, eMax] = def.element_range;
+      return Array.from({ length: def.array_length },
+        () => Math.floor(Math.random() * (eMax - eMin + 1)) + eMin);
+    }
+    case 'nested_array': {
+      const pool = def.secret_pool;
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+    default: return 0;
+  }
+}
+
+// ── Ruby literal 轉換（支援巢狀陣列）────────────────────
+function toRubyLit(v) {
+  if (Array.isArray(v)) return '[' + v.map(toRubyLit).join(', ') + ']';
+  if (typeof v === 'string') return `"${v}"`;
+  return String(v);
+}
+
+// ── 題目工廠函數 ─────────────────────────────────────────
+function buildQuestion(def, raw) {
+  const isArray  = Array.isArray(raw);
+  const isString = def.secret_type === 'string';
+
+  const rubyLiteral = isArray ? toRubyLit(raw) : isString ? `"${raw}"` : String(raw);
+  const displayVal  = isArray ? toRubyLit(raw) : String(raw);
+
+  const fn = EXPECTED_MAP[def.answer];
+  const expected = fn ? fn(raw) : '???';
+
+  // .shuffle / .sample 結果不固定，用 validator 函數取代字串比對
+  let validator = null;
+  if (def.answer === '.shuffle') {
+    const origSorted = raw.slice().sort((a, b) => a - b).join('\n');
+    validator = (result) => {
+      const resSorted = result.trim().split('\n').map(Number).sort((a, b) => a - b).join('\n');
+      return resSorted === origSorted;
+    };
+  } else if (def.answer === '.sample') {
+    validator = (result) => raw.map(String).includes(result.trim());
+  }
+
+  return {
+    category:    def.category,
+    difficulty:  def.difficulty,
+    question:    def.question.replace('{secret}', displayVal),
+    codeLine1:   `secret = ${rubyLiteral}`,
+    inputPrefix: 'puts secret',
+    expected,
+    answer:      def.answer,
+    rubyCode:    (input) => `secret = ${rubyLiteral}\nputs secret${input}`,
+    tips:        def.tips,
+    validator,
+  };
+}
+
+function generateTaskFromDef(def) {
+  return buildQuestion(def, generateSecret(def));
+}
+
+// ── State persistence（sessionStorage，防止 iOS 意外 reload 時遺失進度）────
+const SAVE_KEY = `ruby_quiz_v1_${PAGE_LANG}`;
+let quizMeta = []; // [{di: TASK_DEFS index, raw: secret value}]
+
+function saveState() {
+  try {
+    sessionStorage.setItem(SAVE_KEY, JSON.stringify({
+      phase: currentPhase, qi: questionIndex, cc: correctCount,
+      ca: currentAttempts, name: playerName, ts: proofTs, meta: quizMeta,
+    }));
+  } catch (_) {}
+}
+
+function clearSavedState() {
+  try { sessionStorage.removeItem(SAVE_KEY); } catch (_) {}
+}
+
+// ── 10 題梯度出題 (3E + 5M + 2H) ─────────────────────────
+let quizQuestions = [];
+
+function prepareQuiz(restoredMeta) {
+  if (restoredMeta) {
+    quizMeta = restoredMeta;
+    quizQuestions = restoredMeta.map(({di, raw}) => buildQuestion(TASK_DEFS[di], raw));
+    return;
+  }
+  const pickIdx = (indices, n) => indices.slice().sort(() => Math.random() - 0.5).slice(0, n);
+  const easyIdx  = TASK_DEFS.flatMap((t, i) => t.difficulty === 'easy'   ? [i] : []);
+  const medIdx   = TASK_DEFS.flatMap((t, i) => t.difficulty === 'medium' ? [i] : []);
+  const hardIdx  = TASK_DEFS.flatMap((t, i) => t.difficulty === 'hard'   ? [i] : []);
+  const selected = [
+    ...pickIdx(easyIdx,  Math.min(3, easyIdx.length)),
+    ...pickIdx(medIdx,   Math.min(5, medIdx.length)),
+    ...pickIdx(hardIdx,  Math.min(2, hardIdx.length)),
+  ];
+  quizMeta = selected.map(di => ({ di, raw: generateSecret(TASK_DEFS[di]) }));
+  quizQuestions = quizMeta.map(({di, raw}) => buildQuestion(TASK_DEFS[di], raw));
+}
+
+// ── 狀態 ─────────────────────────────────────────────────
+let rubyVM        = null;
+let currentPhase  = 'quiz';
+let questionIndex = 0;
+let correctCount  = 0;
+let currentAttempts = 0;
+let playerName    = '';
+let proofTs       = '';
+
+// ── Phase 切換 ────────────────────────────────────────────
+window.switchPhase = function (name) {
+  ['quiz', 'result', 'form', 'proof'].forEach(p => {
+    document.getElementById('phase-' + p).style.display = p === name ? '' : 'none';
+  });
+  currentPhase = name;
+  window.scrollTo({ top: document.getElementById('challenge').offsetTop - 20, behavior: 'smooth' });
+
+  if (name === 'result') renderResult();
+  if (name === 'proof')  { renderProof(); clearSavedState(); }
+  else saveState();
+};
+
+// ── 進度條 ────────────────────────────────────────────────
+function updateProgress() {
+  const n = questionIndex + 1;
+  document.getElementById('progress-text').textContent = tpl(UI.quiz_progress, { n });
+  document.getElementById('score-text').textContent    = tpl(UI.quiz_score, { n: correctCount });
+  document.getElementById('progress-fill').style.width = (n / TOTAL_QUESTIONS * 100) + '%';
+}
+
+// ── 難度 badge ────────────────────────────────────────────
+const DIFF_STYLE = {
+  easy:   { bg: '#dcfce7', color: '#16a34a', label: UI.diff_easy   },
+  medium: { bg: '#fef9c3', color: '#ca8a04', label: UI.diff_medium },
+  hard:   { bg: '#fde8e7', color: '#bd3f32', label: UI.diff_hard   },
+};
+
+// ── 渲染題目 ──────────────────────────────────────────────
+function renderQuestion(q) {
+  document.getElementById('task-category').textContent  = q.category;
+  document.getElementById('task-question').textContent  = q.question;
+  document.getElementById('task-code').textContent      = q.codeLine1;
+  document.getElementById('code-display').textContent   = q.codeLine1;
+  document.getElementById('input-prefix').textContent   = q.inputPrefix;
+  document.getElementById('method-input').value         = '';
+  document.getElementById('line-nums').innerHTML        = '1<br>2<br>3';
+
+  const ds = DIFF_STYLE[q.difficulty] || DIFF_STYLE.easy;
+  const badge = document.getElementById('difficulty-badge');
+  badge.textContent        = ds.label;
+  badge.style.background   = ds.bg;
+  badge.style.color        = ds.color;
+
+  document.getElementById('attempts-badge').textContent = '';
+  document.getElementById('feedback-panel').style.display = 'none';
+  setOutput(`<span style="color:#4a3a48;">${UI.quiz_output_waiting}</span>`);
+
+  document.getElementById('tips-list').innerHTML = q.tips.map(t => `
+    <div style="background:#fef6f0;border-radius:8px;padding:10px 14px;">
+      <code style="font-family:monospace;font-size:12px;color:#323232;">${t.code}</code>
+      <p style="font-size:11px;color:#9b9b9b;margin:3px 0 0;">${t.desc}</p>
+    </div>
+  `).join('');
+}
+
+// ── 輸出 ──────────────────────────────────────────────────
+function setOutput(html) {
+  document.getElementById('output-body').innerHTML = html;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── 正確回饋 ──────────────────────────────────────────────
+function showCorrectFeedback() {
+  const fp = document.getElementById('feedback-panel');
+  fp.style.display = 'block';
+  fp.innerHTML = `
+    <div style="background:#f0faf4;border:1px solid #bbf7d0;border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:12px;">
+      <span style="font-size:24px;">🎉</span>
+      <span style="font-size:16px;font-weight:700;color:#15803d;">${UI.feedback_correct}</span>
+    </div>`;
+}
+
+// ── 答錯回饋 ──────────────────────────────────────────────
+function showRetryFeedback(remaining) {
+  const fp = document.getElementById('feedback-panel');
+  fp.style.display = 'block';
+  fp.innerHTML = `
+    <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:12px;">
+      <span style="font-size:20px;">❌</span>
+      <span style="font-size:14px;color:#9a3412;">${tpl(UI.feedback_wrong, { n: remaining })}</span>
+    </div>`;
+  document.getElementById('attempts-badge').textContent = tpl(UI.feedback_attempts_remaining, { n: remaining });
+}
+
+// ── 顯示正確答案 ──────────────────────────────────────────
+function showAnswerReveal(q) {
+  const fp = document.getElementById('feedback-panel');
+  fp.style.display = 'block';
+  fp.innerHTML = `
+    <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:16px 20px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <span style="font-size:18px;">😅</span>
+        <span style="font-size:14px;font-weight:700;color:#991b1b;">${UI.feedback_exhausted}</span>
+      </div>
+      <code style="font-family:monospace;font-size:14px;color:#7f1d1d;background:#fee2e2;border-radius:6px;padding:6px 12px;display:inline-block;">
+        puts secret${escHtml(q.answer)}
+      </code>
+    </div>`;
+}
+
+// ── 下一題 / 結束 ─────────────────────────────────────────
+function nextQuestion() {
+  questionIndex++;
+  if (questionIndex >= quizQuestions.length) {
+    switchPhase('result');
+  } else {
+    currentAttempts = 0;
+    updateProgress();
+    renderQuestion(quizQuestions[questionIndex]);
+    saveState();
+  }
+}
+
+// ── 執行 Ruby ─────────────────────────────────────────────
+window.runRuby = async function () {
+  if (!rubyVM) {
+    setOutput(`<span style="color:#febc2e;">${UI.wasm_not_ready}</span>`);
+    return;
+  }
+
+  const input = document.getElementById('method-input').value.trim();
+  if (!input) {
+    setOutput(`<span style="color:#febc2e;">${UI.wasm_no_input}</span>`);
+    return;
+  }
+
+  const q = quizQuestions[questionIndex];
+  const wrapped = `
+require 'stringio'
+$stdout = StringIO.new
+begin
+  ${q.rubyCode(input)}
+  $stdout.string.chomp
+rescue SyntaxError => e
+  "SyntaxError: \#{e.message}"
+rescue => e
+  "\#{e.class}: \#{e.message}"
+ensure
+  $stdout = STDOUT
+end
+`;
+
+  let result;
+  try {
+    result = rubyVM.eval(wrapped).toString();
+  } catch (e) {
+    // iOS Safari: "Maximum call stack size exceeded" — retry after a macrotask break
+    if (e instanceof RangeError || e.message?.includes('call stack')) {
+      try {
+        await new Promise(r => setTimeout(r, 50));
+        result = rubyVM.eval(wrapped).toString();
+      } catch (e2) {
+        setOutput(`<span style="color:#f87171;">${UI.exec_error_prefix} ${escHtml(e2.message)}</span>`);
+        return;
+      }
+    } else {
+      setOutput(`<span style="color:#f87171;">${UI.exec_error_prefix} ${escHtml(e.message)}</span>`);
+      return;
+    }
+  }
+
+  const isError = result.includes('Error:') || result.includes('SyntaxError');
+  if (isError) {
+    setOutput(`<span style="color:#f87171;">${escHtml(result)}</span>`);
+    return;
+  }
+
+  setOutput(`<span style="color:#4ade80;">=&gt; ${escHtml(result)}</span>`);
+
+  if (q.validator ? q.validator(result) : result.trim() === q.expected.trim()) {
+    correctCount++;
+    document.getElementById('score-text').textContent = tpl(UI.quiz_score, { n: correctCount });
+    showCorrectFeedback();
+    setTimeout(() => nextQuestion(), 1400);
+  } else {
+    currentAttempts++;
+    if (currentAttempts >= MAX_ATTEMPTS) {
+      showAnswerReveal(q);
+      setTimeout(() => nextQuestion(), 3000);
+    } else {
+      showRetryFeedback(MAX_ATTEMPTS - currentAttempts);
+    }
+  }
+};
+
+// ── 詢問 AI ───────────────────────────────────────────────
+window.askAI = function () {
+  const q = quizQuestions[questionIndex];
+  if (!q) return;
+  const prompt =
+`${UI.ai_prompt_intro}
+
+${UI.ai_prompt_category_label}${q.category}
+${UI.ai_prompt_question_label}${q.question}
+${UI.ai_prompt_code_label}
+\`\`\`ruby
+${q.codeLine1}
+puts secret.???   ${UI.ai_prompt_code_comment}
+\`\`\`
+
+${UI.ai_prompt_instruction}`;
+
+  window.open('https://chatgpt.com/?prompt=' + encodeURIComponent(prompt), '_blank');
+
+  const btn = document.getElementById('ask-ai-btn');
+  const orig = btn.innerHTML;
+  btn.innerHTML = UI.ask_ai_opening;
+  btn.style.color = '#16a34a'; btn.style.borderColor = '#16a34a';
+  setTimeout(() => { btn.innerHTML = orig; btn.style.color = '#6d28d9'; btn.style.borderColor = '#7c3aed'; }, 2000);
+};
+
+// ── Phase Result: Canvas 成績單 ───────────────────────────
+function renderResult() {
+  const sub = document.getElementById('result-subtitle');
+  sub.textContent = correctCount >= 8
+    ? tpl(UI.result_great, { n: correctCount })
+    : correctCount >= 5
+    ? tpl(UI.result_good, { n: correctCount })
+    : tpl(UI.result_encourage, { n: correctCount });
+
+  document.fonts.ready.then(() => drawScoreCard());
+}
+
+function drawScoreCard() {
+  const canvas = document.getElementById('share-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 1080, H = 1080;
+
+  // Background gradient
+  const grad = ctx.createRadialGradient(W/2, H*0.35, 0, W/2, H/2, W*0.75);
+  grad.addColorStop(0, '#d94f40');
+  grad.addColorStop(1, '#7a2219');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Decorative circles
+  ctx.globalAlpha = 0.07;
+  for (const [cx, cy, r] of [[W*0.1, H*0.1, 260],[W*0.9, H*0.85, 320],[W*0.85, H*0.15, 180]]) {
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
+    ctx.fillStyle = '#fff'; ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  // SITCON 2026 top label
+  ctx.fillStyle = 'rgba(255,255,255,0.65)';
+  ctx.font = '500 38px Montserrat, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(UI.canvas_top_label, W/2, 100);
+
+  // Logo
+  const logo = new Image();
+  logo.crossOrigin = 'anonymous';
+  logo.src = '{{ "/assets/images/rubytw_logo.png" | relative_url }}';
+
+  const drawContent = () => {
+    // Score (big)
+    ctx.fillStyle = '#fff';
+    ctx.font = `800 220px Montserrat, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText(String(correctCount), W/2, H*0.52);
+
+    // "/ 10"
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.font = '600 80px Montserrat, sans-serif';
+    ctx.fillText('/ 10', W/2, H*0.52 + 90);
+
+    // Stars row
+    const stars = '⭐'.repeat(correctCount) + '○'.repeat(10 - correctCount);
+    ctx.font = '52px sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.fillText(stars.slice(0, 10), W/2, H*0.72);
+
+    // Tagline
+    ctx.font = `600 44px ${PAGE_LANG === 'ja' ? '"Noto Sans JP", ' : ''}Montserrat, sans-serif`;
+    ctx.fillStyle = '#fff';
+    ctx.fillText(UI.canvas_tagline, W/2, H*0.83);
+
+    // @rubytaiwan2008
+    ctx.font = '500 36px Montserrat, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.fillText(UI.canvas_hashtags, W/2, H*0.9);
+  };
+
+  logo.onload = () => {
+    // Draw logo above score
+    const logoH = 240, logoW = logo.width * (logoH / logo.height);
+    ctx.drawImage(logo, W/2 - logoW/2, 130, logoW, logoH);
+    drawContent();
+  };
+  logo.onerror = () => {
+    // Fallback: draw gem emoji
+    ctx.font = '180px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('💎', W/2, 360);
+    drawContent();
+  };
+}
+
+window.shareScoreCard = async function () {
+  const canvas = document.getElementById('share-canvas');
+  const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+  const file = new File([blob], UI.share_filename, { type: 'image/png' });
+  if (navigator.canShare?.({ files: [file] })) {
+    await navigator.share({
+      files: [file],
+      title: UI.share_title,
+      text: tpl(UI.share_text, { n: correctCount }),
+    });
+  } else {
+    downloadCanvas();
+  }
+};
+
+window.downloadCanvas = function () {
+  const a = document.createElement('a');
+  a.download = UI.share_filename;
+  a.href = document.getElementById('share-canvas').toDataURL('image/png');
+  a.click();
+};
+
+// ── Phase Form: 提交到 listmonk ───────────────────────────
+window.submitForm = async function () {
+  const name   = document.getElementById('form-name').value.trim();
+  const email  = document.getElementById('form-email').value.trim();
+  const phone      = document.getElementById('form-phone').value.trim();
+  const school     = document.getElementById('form-school').value.trim();
+  const rubyCourse = document.getElementById('form-ruby-course').checked;
+  const message    = document.getElementById('form-message').value.trim();
+
+  if (!name || !email) {
+    alert(UI.form_validation_error);
+    return;
+  }
+
+  playerName = name;
+
+  const btn = document.getElementById('form-submit-btn');
+  btn.disabled = true;
+  btn.textContent = UI.form_submitting;
+
+  try {
+      await fetch(SUBMIT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          name,
+          list_uuids: [LISTMONK_LIST_UUID],
+          attribs: { phone, school, ruby_course_interest: rubyCourse, message, score: correctCount, total: TOTAL_QUESTIONS },
+        }),
+      });
+    } catch (e) {
+      console.warn('Form submit error (continuing anyway):', e);
+    }
+
+  switchPhase('proof');
+};
+
+// ── Phase Proof ───────────────────────────────────────────
+function generateProofCode(name, score, ts) {
+  const raw = (name || 'anon') + score + ts + SALT;
+  let h = 0;
+  for (let i = 0; i < raw.length; i++) {
+    h = Math.imul(31, h) + raw.charCodeAt(i) | 0;
+  }
+  const hash = Math.abs(h).toString(36).toUpperCase().padStart(8, '0').slice(0, 8);
+  return `RUBY-${String(score).padStart(2, '0')}-${hash}`;
+}
+
+function renderProof() {
+  const now = new Date();
+  proofTs = now.toISOString();
+  const displayTime = now.toLocaleString(UI.date_locale, { hour12: false });
+  const code = generateProofCode(playerName, correctCount, proofTs);
+
+  document.getElementById('proof-name').textContent  = playerName || '';
+  document.getElementById('proof-score').textContent = correctCount;
+  document.getElementById('proof-code').textContent  = code;
+  document.getElementById('proof-time').textContent  = displayTime;
+
+  // QR Code
+  const qrEl = document.getElementById('proof-qrcode');
+  qrEl.innerHTML = '';
+  try {
+    const qr = window.qrcode(4, 'M');
+    qr.addData(code);
+    qr.make();
+    qrEl.innerHTML = qr.createSvgTag(4, 0);
+  } catch (e) {
+    qrEl.textContent = code;
+  }
+
+  // Live clock
+  const clockEl = document.getElementById('proof-live-time');
+  const tick = () => {
+    if (currentPhase !== 'proof') return;
+    clockEl.textContent = new Date().toLocaleString(UI.date_locale, { hour12: false });
+    requestAnimationFrame(tick);
+  };
+  tick();
+}
+
+// ── 載入 Ruby WASM ────────────────────────────────────────
+async function initRuby() {
+  const statusEl = document.getElementById('ruby-status');
+  const wasmUrl  = '{{ "/assets/ruby-wasm/ruby+stdlib.wasm" | relative_url }}';
+  try {
+    const { DefaultRubyVM } = window["ruby-wasm-wasi"];
+
+    // Step 1: compile
+    statusEl.textContent = UI.wasm_step1;
+    let module;
+    try {
+      // Preferred: streaming compile (memory-efficient, works on most browsers)
+      module = await WebAssembly.compileStreaming(fetch(wasmUrl));
+    } catch (_) {
+      // Fallback: fetch as ArrayBuffer then compile
+      // (handles browsers where compileStreaming silently fails)
+      statusEl.textContent = UI.wasm_step1_fallback;
+      const resp = await fetch(wasmUrl);
+      const buf  = await resp.arrayBuffer();
+      module = await WebAssembly.compile(buf);
+    }
+
+    // Step 2: instantiate Ruby VM
+    statusEl.textContent = UI.wasm_step2;
+    const { vm } = await DefaultRubyVM(module);
+
+    rubyVM = vm;
+    // Warm-up: pre-load stringio to avoid deep call stack on first eval
+    // (workaround for iOS Safari 18.x "Maximum call stack size exceeded")
+    try { rubyVM.eval('require "stringio"; require "strscan"'); } catch(_) {}
+    statusEl.textContent = UI.wasm_ready;
+    statusEl.style.color = '#16a34a';
+    document.getElementById('run-btn').style.opacity = '1';
+  } catch (e) {
+    // Show actual error to aid remote debugging
+    const msg = (e && (e.message || String(e))) || 'unknown';
+    statusEl.textContent = `${UI.wasm_error_prefix} ${msg.slice(0, 80)}`;
+    statusEl.style.color = '#f87171';
+    console.error('Ruby WASM load error:', e);
+  }
+}
+
+// ── 初始化 ────────────────────────────────────────────────
+(function () {
+  let snap;
+  try { snap = JSON.parse(sessionStorage.getItem(SAVE_KEY)); } catch (_) {}
+
+  if (snap && Array.isArray(snap.meta) && snap.meta.length > 0) {
+    // iOS 等情境 reload 後，從 sessionStorage 還原進度
+    prepareQuiz(snap.meta);
+    questionIndex   = snap.qi   ?? 0;
+    correctCount    = snap.cc   ?? 0;
+    currentAttempts = snap.ca   ?? 0;
+    playerName      = snap.name ?? '';
+    proofTs         = snap.ts   ?? '';
+    currentPhase    = snap.phase ?? 'quiz';
+  } else {
+    prepareQuiz();
+  }
+
+  updateProgress();
+  renderQuestion(quizQuestions[Math.min(questionIndex, quizQuestions.length - 1)]);
+  // switchPhase 會處理 phase 顯示、renderResult/renderProof，以及 saveState
+  switchPhase(currentPhase);
+  document.getElementById('run-btn').style.opacity = '0.6';
+  initRuby();
+})();
+
+document.getElementById('method-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') window.runRuby();
+});
+
+</script>
