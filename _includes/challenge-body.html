@@ -308,58 +308,6 @@ const LISTMONK_LIST_UUID = '{{ site.listmonk_list_uuid }}';
 // ── 題目定義 — 從 _data/tasks/[lang].yml 注入 ─────────────
 const TASK_DEFS = {{ site.data.tasks[page.lang] | jsonify }};
 
-// ── answer → JS 計算函數映射（不用 eval）───────────────────
-// 注意：puts 對陣列的輸出是每個元素各自一行（\n 分隔），不是 [a, b, c] 格式
-const EXPECTED_MAP = {
-  '.next':       (v) => String(Number(v) + 1),
-  '.pred':       (v) => String(Number(v) - 1),
-  '.abs':        (v) => String(Math.abs(Number(v))),
-  '.to_i':       (v) => String(parseInt(v)),
-  '.to_f':       (v) => { const f = parseFloat(v); return Number.isInteger(f) ? f.toFixed(1) : String(f); },
-  '.to_s':       (v) => String(v),
-  '.upcase':     (v) => v.toUpperCase(),
-  '.downcase':   (v) => v.toLowerCase(),
-  '.reverse':    (v) => Array.isArray(v) ? v.slice().reverse().join('\n') : v.split('').reverse().join(''),
-  '.length':     (v) => String(Array.isArray(v) ? v.length : String(v).length),
-  '.size':       (v) => String(Array.isArray(v) ? v.length : String(v).length),
-  '.capitalize': (v) => v.charAt(0).toUpperCase() + v.slice(1).toLowerCase(),
-  '.swapcase':   (v) => v.split('').map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join(''),
-  '.strip':      (v) => v.trim(),
-  '.lstrip':     (v) => v.trimStart(),
-  '.rstrip':     (v) => v.trimEnd(),
-  '.sum':        (v) => String(v.reduce((a, b) => a + b, 0)),
-  '.min':        (v) => String(Math.min(...v)),
-  '.max':        (v) => String(Math.max(...v)),
-  '.first':      (v) => String(v[0]),
-  '.last':       (v) => String(v[v.length - 1]),
-  '.sort':       (v) => v.slice().sort((a, b) => a - b).join('\n'),
-  '.uniq':       (v) => [...new Set(v)].join('\n'),
-  '.count':      (v) => String(v.length),
-  '.odd?':       (v) => String(Number(v) % 2 !== 0),
-  '.even?':      (v) => String(Number(v) % 2 === 0),
-  '.zero?':      (v) => String(Number(v) === 0),
-  '.positive?':  (v) => String(Number(v) > 0),
-  '.negative?':  (v) => String(Number(v) < 0),
-  '.nil?':       (_) => 'false',
-  '.frozen?':    (_) => 'false',
-  '.class':      (v) => Array.isArray(v) ? 'Array' : typeof v === 'number' ? 'Integer' : 'String',
-  '* 2':         (v) => String(Number(v) * 2),
-  // ── 新增（tasks.yml 更新後需要）──────────────────────────
-  '.pop':        (v) => String(v[v.length - 1]),
-  '.shift':      (v) => String(v[0]),
-  '.chars':      (v) => v.split('').join('\n'),
-  '.empty?':     (v) => String((Array.isArray(v) ? v.length : String(v).length) === 0),
-  '.freeze':     (v) => String(v),
-  '.dup':        (v) => String(v),
-  '.to_sym':     (v) => String(v),
-  '.rotate':     (v) => [...v.slice(1), v[0]].join('\n'),
-  '.inspect':    (v) => {
-    if (Array.isArray(v)) return '[' + v.map(x => typeof x === 'string' ? '"' + x + '"' : x).join(', ') + ']';
-    if (typeof v === 'number') return String(v);
-    return '"' + v + '"';
-  },
-  '.flatten':    (v) => Array.isArray(v) ? v.flat(Infinity).join('\n') : String(v),
-};
 
 // ── secret 生成 ──────────────────────────────────────────
 function generateSecret(def) {
@@ -399,27 +347,16 @@ function toRubyLit(v) {
 }
 
 // ── 題目工廠函數 ─────────────────────────────────────────
+// expected は WASM ロード後に computeAllExpected() で埋める
 function buildQuestion(def, raw) {
-  const isArray  = Array.isArray(raw);
-  const isString = def.secret_type === 'string';
-
+  const isArray     = Array.isArray(raw);
+  const isString    = def.secret_type === 'string';
   const rubyLiteral = isArray ? toRubyLit(raw) : isString ? `"${raw}"` : String(raw);
   const displayVal  = isArray ? toRubyLit(raw) : String(raw);
 
-  const fn = EXPECTED_MAP[def.answer];
-  const expected = fn ? fn(raw) : '???';
-
-  // .shuffle / .sample 結果不固定，用 validator 函數取代字串比對
-  let validator = null;
-  if (def.answer === '.shuffle') {
-    const origSorted = raw.slice().sort((a, b) => a - b).join('\n');
-    validator = (result) => {
-      const resSorted = result.trim().split('\n').map(Number).sort((a, b) => a - b).join('\n');
-      return resSorted === origSorted;
-    };
-  } else if (def.answer === '.sample') {
-    validator = (result) => raw.map(String).includes(result.trim());
-  }
+  // .shuffle / .sample は非決定的なので seed を固定して再現性を確保
+  const needsSeed = def.answer === '.shuffle' || def.answer === '.sample';
+  const seed = needsSeed ? Math.floor(Math.random() * 2147483647) : null;
 
   return {
     category:    def.category,
@@ -427,16 +364,16 @@ function buildQuestion(def, raw) {
     question:    def.question.replace('{secret}', displayVal),
     codeLine1:   `secret = ${rubyLiteral}`,
     inputPrefix: 'puts secret',
-    expected,
+    expected:    null, // computeAllExpected() で設定
     answer:      def.answer,
-    rubyCode:    (input) => `secret = ${rubyLiteral}\nputs secret${input}`,
-    tips:        def.tips,
-    validator,
+    seed,
+    rubyCode: (input) => [
+      ...(seed !== null ? [`srand(${seed})`] : []),
+      `secret = ${rubyLiteral}`,
+      `puts secret${input}`,
+    ].join('\n'),
+    tips: def.tips,
   };
-}
-
-function generateTaskFromDef(def) {
-  return buildQuestion(def, generateSecret(def));
 }
 
 // ── State persistence（sessionStorage，防止 iOS 意外 reload 時遺失進度）────
@@ -660,7 +597,7 @@ end
 
   setOutput(`<span style="color:#4ade80;">=&gt; ${escHtml(result)}</span>`);
 
-  if (q.validator ? q.validator(result) : result.trim() === q.expected.trim()) {
+  if (result.trim() === (q.expected ?? '').trim()) {
     correctCount++;
     document.getElementById('score-text').textContent = tpl(UI.quiz_score, { n: correctCount });
     showCorrectFeedback();
@@ -893,6 +830,28 @@ function renderProof() {
   tick();
 }
 
+// ── WASM で全題目の expected を算出 ──────────────────────
+async function computeAllExpected() {
+  for (const q of quizQuestions) {
+    const code = `
+require 'stringio'
+$stdout = StringIO.new
+begin
+  ${q.rubyCode(q.answer)}
+  $stdout.string.chomp
+rescue => e
+  "\#{e.class}: \#{e.message}"
+ensure
+  $stdout = STDOUT
+end`;
+    try {
+      q.expected = rubyVM.eval(code).toString();
+    } catch (_) {
+      q.expected = '???';
+    }
+  }
+}
+
 // ── 載入 Ruby WASM ────────────────────────────────────────
 async function initRuby() {
   const statusEl = document.getElementById('ruby-status');
@@ -923,6 +882,9 @@ async function initRuby() {
     // Warm-up: pre-load stringio to avoid deep call stack on first eval
     // (workaround for iOS Safari 18.x "Maximum call stack size exceeded")
     try { rubyVM.eval('require "stringio"; require "strscan"'); } catch(_) {}
+
+    // 用 Ruby WASM 算出所有題目的 expected（不再需要 EXPECTED_MAP）
+    await computeAllExpected();
     statusEl.textContent = UI.wasm_ready;
     statusEl.style.color = '#16a34a';
     document.getElementById('run-btn').style.opacity = '1';

@@ -29,8 +29,9 @@ JEKYLL_ENV=production bundle exec jekyll build
 ### Key Files
 
 - `_config.yml` — site-wide settings; also holds `listmonk_list_uuid` for the subscription API
-- `index.html` — main challenge page (4-phase game flow)
-- `_data/tasks.yml` — Ruby challenge task bank (easy/medium/hard, 15 tasks)
+- `index.html` / `en/index.html` / `ja/index.html` — language entry points (each sets `lang:` front matter and includes `challenge-body.html`)
+- `_includes/challenge-body.html` — main challenge page logic (4-phase game flow, i18n-aware)
+- `_data/tasks/` — Ruby challenge task bank per language (easy/medium/hard, 15 tasks each)
 - `_layouts/challenge.html` — layout for the challenge page; loads qrcode.min.js and ruby-wasm browser.umd.js
 - `_includes/cover.html` — Ruby Taiwan cover section SVG artwork
 - `_includes/cover-styles.html` — CSS for the cover section
@@ -51,7 +52,7 @@ JEKYLL_ENV=production bundle exec jekyll build
 3. **form** — Collects name, email, phone, school; POSTs to listmonk (`/api/public/subscription`). Failure is non-blocking.
 4. **proof** — Completion certificate with QR code, proof code (`RUBY-{score:02d}-{hash8}`), shimmer animation, live clock.
 
-### Task Bank (`_data/tasks.yml`)
+### Task Bank (`_data/tasks/<lang>.yml`)
 
 Each task has:
 - `category`, `difficulty` (`easy`/`medium`/`hard`)
@@ -61,7 +62,16 @@ Each task has:
 - `answer` — the Ruby method/operator (e.g. `.next`, `* 2`)
 - `tips` — array of `{ code, desc }` hint items
 
-`EXPECTED_MAP` in `index.html` maps each `answer` string to a JS lambda for answer verification without `eval`.
+Answer verification uses Ruby WASM: after the VM loads, `computeAllExpected()` runs each question's correct answer through `rubyVM.eval` and stores the output in `q.expected`. Non-deterministic methods (`.shuffle`, `.sample`) use a per-question `srand(seed)` to ensure reproducibility. **No `EXPECTED_MAP` or JS reimplementation of Ruby methods needed — any valid Ruby expression can be an `answer`.**
+
+### i18n
+
+Three languages: `zh-TW` (default), `en`, `ja`. Each has:
+- `_data/locales/<lang>.yml` — all UI strings
+- `_data/tasks/<lang>.yml` — translated task bank
+- `<lang>/index.html` (or root `index.html` for zh-TW) — sets `lang:` front matter, includes `challenge-body.html`
+
+`challenge-body.html` reads `{% assign t = site.data.locales[page.lang] %}` for all UI text.
 
 ### listmonk Integration
 

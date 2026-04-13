@@ -85,9 +85,11 @@ cp _config.local.yml.example _config.local.yml  # 如有需要再調整
 - **Medium**（7 題）：`.class`、`.to_i`、`.strip`、`.length`、`.max`、`.first`、`* 2`
 - **Hard**（3 題）：`.odd?`、`.swapcase`、`.frozen?`
 
+題庫支援三語言（`zh-TW` / `en` / `ja`），各放在 `_data/tasks/<lang>.yml`。
+
 每次遊戲從中隨機抽出 3 Easy + 5 Medium + 2 Hard，共 10 題。
 
-新增題目只需在 `_data/tasks.yml` 加入對應格式的 YAML，並在 `index.html` 的 `EXPECTED_MAP` 補上 JS 計算函數即可。
+新增題目只需在 `_data/tasks/<lang>.yml` 加入對應格式的 YAML 即可。答案驗證改由 Ruby WASM 執行正確答案後比對輸出，不再需要維護 JS 版的 `EXPECTED_MAP`，`answer` 欄位可以是任意合法的 Ruby 運算式。
 
 ---
 
