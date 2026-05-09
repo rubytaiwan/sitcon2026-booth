@@ -1,0 +1,38 @@
+- id: js_odd_filter
+  code: "[1, 2, 3, 4, 5].filter(n => n % 2 !== 0)\n// => [1, 3, 5]"
+  expected: "[1, 3, 5]"
+  answer: "[1, 2, 3, 4, 5].select(&:odd?)"
+  tips:
+    - { code: "Array#select", desc: "過濾符合條件的元素" }
+    - { code: "Integer#odd?", desc: "判斷是否為奇數" }
+    - { code: "Symbol#to_proc (&:odd?)", desc: "方法名稱轉成 Proc" }
+
+- id: js_sum
+  code: "[1, 2, 3, 4, 5].reduce((acc, n) => acc + n, 0)\n// => 15"
+  expected: "15"
+  answer: "[1, 2, 3, 4, 5].sum"
+  tips:
+    - { code: "Array#sum", desc: "所有元素加總" }
+    - { code: "Array#reduce(:+)", desc: "也可以這樣寫" }
+
+- id: js_reverse_string
+  code: "\"hello\".split(\"\").reverse().join(\"\")\n// => \"olleh\""
+  expected: "olleh"
+  answer: '"hello".reverse'
+  tips:
+    - { code: "String#reverse", desc: "字串反轉" }
+
+- id: js_square
+  code: "[1, 2, 3].map(n => n ** 2)\n// => [1, 4, 9]"
+  expected: "[1, 4, 9]"
+  answer: "[1, 2, 3].map { |n| n ** 2 }"
+  tips:
+    - { code: "Array#map", desc: "轉換每個元素" }
+    - { code: "** 運算子", desc: "次方" }
+
+- id: js_max
+  code: "Math.max(...[3, 1, 4, 1, 5, 9, 2, 6])\n// => 9"
+  expected: "9"
+  answer: "[3, 1, 4, 1, 5, 9, 2, 6].max"
+  tips:
+    - { code: "Array#max", desc: "取得最大值" }

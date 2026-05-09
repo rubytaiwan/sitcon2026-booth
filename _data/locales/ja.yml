@@ -8,10 +8,10 @@ date_locale: "ja-JP"
 # ── Section Header ──
 header_tag: "// RUBY インタラクティブ錬金術 ブースチャレンジ"
 header_title: "今日から Ruby を始めよう"
-header_subtitle: "10問のRubyチャレンジ、本物のコードを実行して、ブースでギフトをもらおう！"
+header_subtitle: "Ruby基礎7問 + 言語対照3問、本物のコードを実行して、ブースでギフトをもらおう！"
 
 # ── Quiz Phase (HTML) ──
-quiz_progress_init: "第 1 / 10 問"
+quiz_progress_init: "第 1 / 7 問"
 quiz_score_init: "⭐ 0 問正解"
 quiz_loading: "読み込み中…"
 quiz_input_placeholder: ".メソッド名"
@@ -25,7 +25,8 @@ quiz_powered_by_desc: "本物の Ruby 4.0 がブラウザで動く"
 quiz_output_waiting: "実行待ち…"
 
 # ── Quiz Phase (JS dynamic) ──
-quiz_progress: "第 {n} / 10 問"
+quiz_progress: "第 {n} / 7 問"
+crosslang_progress: "言語対照 {n} / 3 問"
 quiz_score: "⭐ {n} 問正解"
 diff_easy: "Easy"
 diff_medium: "Medium"
@@ -104,6 +105,25 @@ ai_prompt_question_label: "【問題の説明】"
 ai_prompt_code_label: "【現在のコード】"
 ai_prompt_code_comment: "# ??? に入れる Ruby メソッドを探しています"
 ai_prompt_instruction: "まず私の最初の考えを聞いてから、必要に応じて段階的なヒントを与え、最後に本当に理解できたと確認してから答えを教えてください。"
+
+# ── Lang Select Phase ──
+lang_select_title: "普段使っている言語は？"
+lang_select_subtitle: "次の3問：慣れた言語のコードを見て、Rubyで同じ処理を書いてみよう"
+lang_select_js: "JavaScript"
+lang_select_py: "Python"
+lang_select_php: "PHP"
+
+# ── Crosslang Phase ──
+crosslang_prompt: "Rubyで同じ結果を返す式を書いてください："
+crosslang_input_placeholder: "Ruby の式"
+crosslang_badge: "クロス言語チャレンジ"
+
+# ── Form additions ──
+form_score_label: "スコア"
+form_lang_label: "選択した言語"
+
+# ── Canvas additions ──
+canvas_lang_prefix: "from"
 
 # ── Language Switcher ──
 lang_switcher_zh: "中文"
