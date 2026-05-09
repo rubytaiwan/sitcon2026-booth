@@ -1,0 +1,37 @@
+- id: py_divisible_by_3
+  code: "[n for n in range(1, 11) if n % 3 == 0]\n# => [3, 6, 9]"
+  expected: "[3, 6, 9]"
+  answer: "(1..10).select { |n| n % 3 == 0 }"
+  tips:
+    - { code: "Range#select", desc: "Range 也能篩選元素" }
+    - { code: "(1..10)", desc: "Ruby 的 Range 物件" }
+
+- id: py_sum
+  code: "sum([1, 2, 3, 4, 5])\n# => 15"
+  expected: "15"
+  answer: "[1, 2, 3, 4, 5].sum"
+  tips:
+    - { code: "Array#sum", desc: "所有元素加總" }
+
+- id: py_title_case
+  code: "\"hello world\".title()\n# => \"Hello World\""
+  expected: "Hello World"
+  answer: '"hello world".split.map(&:capitalize).join(" ")'
+  tips:
+    - { code: "String#split", desc: "不帶參數用空白分割" }
+    - { code: "String#capitalize", desc: "首字大寫" }
+    - { code: "Array#join", desc: "陣列合併成字串" }
+
+- id: py_count_gt
+  code: "len([x for x in [1, 2, 3, 4, 5] if x > 2])\n# => 3"
+  expected: "3"
+  answer: "[1, 2, 3, 4, 5].count { |n| n > 2 }"
+  tips:
+    - { code: "Array#count { |n| ... }", desc: "計算符合條件的元素數量" }
+
+- id: py_double
+  code: "list(map(lambda x: x * 2, [1, 2, 3]))\n# => [2, 4, 6]"
+  expected: "[2, 4, 6]"
+  answer: "[1, 2, 3].map { |n| n * 2 }"
+  tips:
+    - { code: "Array#map", desc: "轉換每個元素" }

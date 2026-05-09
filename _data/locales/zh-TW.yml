@@ -8,10 +8,10 @@ date_locale: "zh-TW"
 # ── Section Header ──
 header_tag: "// RUBY 互動煉金術 BOOTH CHALLENGE"
 header_title: "學 Ruby，從今天開始"
-header_subtitle: "連續挑戰 10 題，執行真實 Ruby 程式碼，完成後領取小禮物！"
+header_subtitle: "7 題 Ruby 基礎 + 3 題跨語言對照，執行真實 Ruby 程式碼，完成後領取小禮物！"
 
 # ── Quiz Phase (HTML) ──
-quiz_progress_init: "第 1 / 10 題"
+quiz_progress_init: "第 1 / 7 題"
 quiz_score_init: "⭐ 0 題答對"
 quiz_loading: "載入中…"
 quiz_input_placeholder: ".方法名稱"
@@ -25,7 +25,8 @@ quiz_powered_by_desc: "真實 Ruby 4.0 在瀏覽器中執行"
 quiz_output_waiting: "等待執行…"
 
 # ── Quiz Phase (JS dynamic) ──
-quiz_progress: "第 {n} / 10 題"
+quiz_progress: "第 {n} / 7 題"
+crosslang_progress: "跨語言 {n} / 3 題"
 quiz_score: "⭐ {n} 題答對"
 diff_easy: "Easy"
 diff_medium: "Medium"
@@ -104,6 +105,25 @@ ai_prompt_question_label: "【題目說明】"
 ai_prompt_code_label: "【目前程式碼】"
 ai_prompt_code_comment: "# ??? 是我需要填入的 Ruby 方法"
 ai_prompt_instruction: "請先問我對這題的初步想法，再視情況給漸進式提示，最後確認我真的理解了再給答案。"
+
+# ── Lang Select Phase ──
+lang_select_title: "你主要使用哪種語言？"
+lang_select_subtitle: "接下來 3 題，看你熟悉的語言，用 Ruby 寫出相同效果"
+lang_select_js: "JavaScript"
+lang_select_py: "Python"
+lang_select_php: "PHP"
+
+# ── Crosslang Phase ──
+crosslang_prompt: "用 Ruby 寫出相同效果："
+crosslang_input_placeholder: "Ruby 表達式"
+crosslang_badge: "跨語言挑戰"
+
+# ── Form additions ──
+form_score_label: "挑戰分數"
+form_lang_label: "你選擇的語言"
+
+# ── Canvas additions ──
+canvas_lang_prefix: "來自"
 
 # ── Language Switcher ──
 lang_switcher_zh: "中文"

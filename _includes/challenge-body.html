@@ -14,20 +14,22 @@
     </div>
 
     <!-- ══════════════════════════════════════════
+         PROGRESS BAR (shared between quiz & crosslang)
+         ══════════════════════════════════════════ -->
+    <div id="phase-progress" style="background: #fff; border: 1px solid #e8d5d3; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span id="progress-text" style="font-size: 13px; font-weight: 600; color: #323232;">{{ t.quiz_progress_init }}</span>
+        <span id="score-text" style="font-size: 13px; color: #16a34a; font-weight: 600;">{{ t.quiz_score_init }}</span>
+      </div>
+      <div style="background: #e8d5d3; border-radius: 4px; height: 8px; overflow: hidden;">
+        <div id="progress-fill" style="background: linear-gradient(90deg, #bd3f32, #e05a4b); height: 100%; width: 10%; transition: width 0.4s ease; border-radius: 4px;"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
          PHASE QUIZ
          ══════════════════════════════════════════ -->
     <div id="phase-quiz">
-
-      <!-- Progress Bar -->
-      <div style="background: #fff; border: 1px solid #e8d5d3; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <span id="progress-text" style="font-size: 13px; font-weight: 600; color: #323232;">{{ t.quiz_progress_init }}</span>
-          <span id="score-text" style="font-size: 13px; color: #16a34a; font-weight: 600;">{{ t.quiz_score_init }}</span>
-        </div>
-        <div style="background: #e8d5d3; border-radius: 4px; height: 8px; overflow: hidden;">
-          <div id="progress-fill" style="background: linear-gradient(90deg, #bd3f32, #e05a4b); height: 100%; width: 10%; transition: width 0.4s ease; border-radius: 4px;"></div>
-        </div>
-      </div>
 
       <!-- Two-column layout -->
       <div style="display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap;">
@@ -137,6 +139,121 @@
     </div><!-- end phase-quiz -->
 
     <!-- ══════════════════════════════════════════
+         PHASE LANG-SELECT
+         ══════════════════════════════════════════ -->
+    <div id="phase-lang-select" style="display: none; max-width: 480px; margin: 0 auto; text-align: center;">
+      <div style="margin-bottom: 32px;">
+        <p style="font-size: 11px; letter-spacing: 2px; color: #bd3f32; font-weight: 600; font-family: monospace; margin: 0 0 8px;">// STAGE 2</p>
+        <h2 style="font-size: 24px; font-weight: 700; color: #323232; margin: 0 0 8px;">{{ t.lang_select_title }}</h2>
+        <p style="font-size: 14px; color: #555; margin: 0;">{{ t.lang_select_subtitle }}</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <button onclick="selectLang('javascript')" style="background: #fff; border: 2px solid #e8d5d3; border-radius: 16px; padding: 24px; cursor: pointer; display: flex; align-items: center; gap: 16px; font-family: Montserrat, sans-serif; transition: all 0.2s;" onmouseover="this.style.borderColor='#bd3f32';this.style.background='#fef6f0'" onmouseout="this.style.borderColor='#e8d5d3';this.style.background='#fff'">
+          <span style="font-size: 36px;">🟨</span>
+          <div style="text-align: left;">
+            <div style="font-size: 16px; font-weight: 700; color: #323232;">{{ t.lang_select_js }}</div>
+            <div style="font-size: 12px; color: #9b9b9b;">Node.js · React · Vue · TypeScript…</div>
+          </div>
+        </button>
+        <button onclick="selectLang('python')" style="background: #fff; border: 2px solid #e8d5d3; border-radius: 16px; padding: 24px; cursor: pointer; display: flex; align-items: center; gap: 16px; font-family: Montserrat, sans-serif; transition: all 0.2s;" onmouseover="this.style.borderColor='#bd3f32';this.style.background='#fef6f0'" onmouseout="this.style.borderColor='#e8d5d3';this.style.background='#fff'">
+          <span style="font-size: 36px;">🐍</span>
+          <div style="text-align: left;">
+            <div style="font-size: 16px; font-weight: 700; color: #323232;">{{ t.lang_select_py }}</div>
+            <div style="font-size: 12px; color: #9b9b9b;">Django · Flask · FastAPI · Data Science…</div>
+          </div>
+        </button>
+        <button onclick="selectLang('php')" style="background: #fff; border: 2px solid #e8d5d3; border-radius: 16px; padding: 24px; cursor: pointer; display: flex; align-items: center; gap: 16px; font-family: Montserrat, sans-serif; transition: all 0.2s;" onmouseover="this.style.borderColor='#bd3f32';this.style.background='#fef6f0'" onmouseout="this.style.borderColor='#e8d5d3';this.style.background='#fff'">
+          <span style="font-size: 36px;">🐘</span>
+          <div style="text-align: left;">
+            <div style="font-size: 16px; font-weight: 700; color: #323232;">{{ t.lang_select_php }}</div>
+            <div style="font-size: 12px; color: #9b9b9b;">Laravel · WordPress · Symfony…</div>
+          </div>
+        </button>
+      </div>
+    </div><!-- end phase-lang-select -->
+
+    <!-- ══════════════════════════════════════════
+         PHASE CROSSLANG
+         ══════════════════════════════════════════ -->
+    <div id="phase-crosslang" style="display: none;">
+      <div style="display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 20px;">
+
+          <!-- Source Code Card -->
+          <div id="crosslang-source-card" style="background: #fff; border: 1px solid #e8d5d3; border-radius: 12px; padding: 20px 24px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <div style="width: 24px; height: 24px; background: #bd3f32; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <span style="color: #fff; font-size: 12px; font-weight: 700;">#</span>
+              </div>
+              <span id="crosslang-badge" style="font-size: 13px; font-weight: 600; color: #323232;"></span>
+              <span style="margin-left: 4px; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #ede9fe; color: #7c3aed;">{{ t.crosslang_badge }}</span>
+            </div>
+            <p style="font-size: 14px; color: #555; margin: 0 0 12px;">{{ t.crosslang_prompt }}</p>
+            <pre style="margin: 0; border-radius: 8px; overflow-x: auto;"><code id="crosslang-code" style="font-size: 13px; line-height: 1.6;"></code></pre>
+          </div>
+
+          <!-- Ruby input (Carbon style) -->
+          <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(50,50,50,0.12);">
+            <div style="background: #2d2d3f; padding: 0 16px; height: 40px; display: flex; align-items: center; gap: 8px;">
+              <span style="width: 12px; height: 12px; background: #ff5f57; border-radius: 50%; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; background: #febc2e; border-radius: 50%; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; background: #28c840; border-radius: 50%; display: inline-block;"></span>
+              <span style="color: #7a6a78; font-size: 12px; font-family: monospace; margin: 0 auto;">ruby_answer.rb</span>
+            </div>
+            <div style="background: #1e1e2e; padding: 16px;">
+              <input
+                id="crosslang-input"
+                type="text"
+                placeholder="{{ t.crosslang_input_placeholder }}"
+                style="background: transparent; border: none; outline: none; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 14px; color: #bd3f32; caret-color: #bd3f32; width: 100%;"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+              >
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <button
+              id="crosslang-run-btn"
+              onclick="runCrosslang()"
+              style="background: #bd3f32; color: #fff; border: none; border-radius: 8px; padding: 12px 28px; font-size: 14px; font-weight: 600; font-family: Montserrat, sans-serif; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.2s;"
+              onmouseover="this.style.background='#a03228'" onmouseout="this.style.background='#bd3f32'"
+            >
+              {{ t.quiz_run_btn }}
+            </button>
+            <span id="crosslang-attempts-badge" style="font-size: 11px; color: #9b9b9b;"></span>
+            <span style="font-size: 12px; color: #9b9b9b; font-family: monospace; margin-left: auto;" id="crosslang-ruby-status"></span>
+          </div>
+
+          <!-- Output Console -->
+          <div style="border-radius: 12px; overflow: hidden;">
+            <div style="background: #2d2d3f; padding: 0 16px; height: 36px; display: flex; align-items: center;">
+              <span style="font-family: monospace; font-size: 11px; letter-spacing: 1.5px; color: #bd3f32; font-weight: 600;">// OUTPUT</span>
+            </div>
+            <div id="crosslang-output" style="background: #1e1e2e; padding: 14px 16px; min-height: 60px; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 14px; color: #9b8fa0; line-height: 1.6;">
+              <span style="color: #4a3a48;">{{ t.quiz_output_waiting }}</span>
+            </div>
+          </div>
+
+          <!-- Feedback Panel -->
+          <div id="crosslang-feedback" style="display: none;"></div>
+
+        </div><!-- end left -->
+
+        <!-- Tips column -->
+        <div style="width: 300px; flex-shrink: 0;">
+          <div style="background: #fff; border: 1px solid #e8d5d3; border-radius: 12px; padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+              <span style="font-size: 16px;">💡</span>
+              <span style="font-size: 14px; font-weight: 700; color: #323232;">{{ t.quiz_tips_title }}</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;" id="crosslang-tips-list"></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end phase-crosslang -->
+
+    <!-- ══════════════════════════════════════════
          PHASE RESULT
          ══════════════════════════════════════════ -->
     <div id="phase-result" style="display: none; max-width: 540px; margin: 0 auto; text-align: center;">
@@ -178,6 +295,18 @@
 
       <div style="background: #fff; border: 1px solid #e8d5d3; border-radius: 16px; padding: 28px;">
         <div style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Score (pre-filled, read-only) -->
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #323232; display: block; margin-bottom: 6px;">{{ t.form_score_label }}</label>
+            <input id="form-score" type="text" readonly
+              style="width: 100%; box-sizing: border-box; border: 1px solid #e8d5d3; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: Montserrat, sans-serif; background: #fef6f0; color: #9b9b9b; cursor: not-allowed;">
+          </div>
+          <!-- Language (pre-filled, read-only) -->
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #323232; display: block; margin-bottom: 6px;">{{ t.form_lang_label }}</label>
+            <input id="form-lang" type="text" readonly
+              style="width: 100%; box-sizing: border-box; border: 1px solid #e8d5d3; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: Montserrat, sans-serif; background: #fef6f0; color: #9b9b9b; cursor: not-allowed;">
+          </div>
           <div>
             <label style="font-size: 13px; font-weight: 600; color: #323232; display: block; margin-bottom: 6px;">{{ t.form_name_label }} <span style="color: #bd3f32;">{{ t.form_name_required }}</span></label>
             <input id="form-name" type="text" placeholder="{{ t.form_name_placeholder }}"
@@ -284,22 +413,24 @@
   </p>
 </footer>
 
-<!-- ===== Ruby WASM + 4-Phase Challenge Logic ===== -->
+<!-- ===== Ruby WASM + 5-Phase Challenge Logic ===== -->
 <script type="module">
 
 // ── i18n UI 字串（從 _data/locales/[lang].yml 注入）────────
 const UI = {{ site.data.locales[page.lang] | jsonify }};
 const PAGE_LANG = '{{ page.lang }}';
 
-// 插值 helper：t(UI.key, { n: value })
+// 插值 helper：tpl(UI.key, { n: value })
 function tpl(template, vars) {
   return template.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
 }
 
 // ── 設定 ─────────────────────────────────────────────────
-const TOTAL_QUESTIONS = 10;
-const MAX_ATTEMPTS    = 3;
-const SALT            = 'SITCON2026RubyTaiwan';
+const STANDARD_QUESTIONS = 7;
+const CROSSLANG_COUNT    = 3;
+const TOTAL_QUESTIONS    = STANDARD_QUESTIONS + CROSSLANG_COUNT; // 10
+const MAX_ATTEMPTS       = 3;
+const SALT               = 'SITCON2026RubyTaiwan';
 
 // listmonk 設定（部署在 edm.ruby.tw/sitcon2026 時同 origin，無 CORS 問題）
 const SUBMIT_URL         = '{{ site.listmonk_submit_url }}';
@@ -308,6 +439,12 @@ const LISTMONK_LIST_UUID = '{{ site.listmonk_list_uuid }}';
 // ── 題目定義 — 從 _data/tasks/[lang].yml 注入 ─────────────
 const TASK_DEFS = {{ site.data.tasks[page.lang] | jsonify }};
 
+// ── crosslang 題庫 — 從 _data/crosslang/*.yml 注入 ────────
+const CROSSLANG_DEFS = {
+  javascript: {{ site.data.crosslang.javascript | jsonify }},
+  python:     {{ site.data.crosslang.python | jsonify }},
+  php:        {{ site.data.crosslang.php | jsonify }},
+};
 
 // ── secret 生成 ──────────────────────────────────────────
 function generateSecret(def) {
@@ -347,14 +484,12 @@ function toRubyLit(v) {
 }
 
 // ── 題目工廠函數 ─────────────────────────────────────────
-// expected は WASM ロード後に computeAllExpected() で埋める
 function buildQuestion(def, raw) {
   const isArray     = Array.isArray(raw);
   const isString    = def.secret_type === 'string';
   const rubyLiteral = isArray ? toRubyLit(raw) : isString ? `"${raw}"` : String(raw);
   const displayVal  = isArray ? toRubyLit(raw) : String(raw);
 
-  // .shuffle / .sample は非決定的なので seed を固定して再現性を確保
   const needsSeed = def.answer === '.shuffle' || def.answer === '.sample';
   const seed = needsSeed ? Math.floor(Math.random() * 2147483647) : null;
 
@@ -364,7 +499,7 @@ function buildQuestion(def, raw) {
     question:    def.question.replace('{secret}', displayVal),
     codeLine1:   `secret = ${rubyLiteral}`,
     inputPrefix: 'puts secret',
-    expected:    null, // computeAllExpected() で設定
+    expected:    null,
     answer:      def.answer,
     seed,
     rubyCode: (input) => [
@@ -376,15 +511,17 @@ function buildQuestion(def, raw) {
   };
 }
 
-// ── State persistence（sessionStorage，防止 iOS 意外 reload 時遺失進度）────
+// ── State persistence（sessionStorage）────────────────────
 const SAVE_KEY = `ruby_quiz_v1_${PAGE_LANG}`;
-let quizMeta = []; // [{di: TASK_DEFS index, raw: secret value}]
+let quizMeta = [];
 
 function saveState() {
   try {
     sessionStorage.setItem(SAVE_KEY, JSON.stringify({
       phase: currentPhase, qi: questionIndex, cc: correctCount,
-      ca: currentAttempts, name: playerName, ts: proofTs, meta: quizMeta,
+      ca: currentAttempts, name: playerName, ts: proofTs,
+      meta: quizMeta, lang: selectedLang,
+      clIds: crosslangIds, cli: crosslangIndex,
     }));
   } catch (_) {}
 }
@@ -393,56 +530,83 @@ function clearSavedState() {
   try { sessionStorage.removeItem(SAVE_KEY); } catch (_) {}
 }
 
-// ── 10 題梯度出題 (3E + 5M + 2H) ─────────────────────────
+// ── 7 題梯度出題 (3E + 3M + 1H) ──────────────────────────
 let quizQuestions = [];
 
 function prepareQuiz(restoredMeta) {
   if (restoredMeta) {
-    quizMeta = restoredMeta;
+    quizMeta      = restoredMeta;
     quizQuestions = restoredMeta.map(({di, raw}) => buildQuestion(TASK_DEFS[di], raw));
     return;
   }
   const pickIdx = (indices, n) => indices.slice().sort(() => Math.random() - 0.5).slice(0, n);
-  const easyIdx  = TASK_DEFS.flatMap((t, i) => t.difficulty === 'easy'   ? [i] : []);
-  const medIdx   = TASK_DEFS.flatMap((t, i) => t.difficulty === 'medium' ? [i] : []);
-  const hardIdx  = TASK_DEFS.flatMap((t, i) => t.difficulty === 'hard'   ? [i] : []);
+  const easyIdx = TASK_DEFS.flatMap((t, i) => t.difficulty === 'easy'   ? [i] : []);
+  const medIdx  = TASK_DEFS.flatMap((t, i) => t.difficulty === 'medium' ? [i] : []);
+  const hardIdx = TASK_DEFS.flatMap((t, i) => t.difficulty === 'hard'   ? [i] : []);
   const selected = [
-    ...pickIdx(easyIdx,  Math.min(3, easyIdx.length)),
-    ...pickIdx(medIdx,   Math.min(5, medIdx.length)),
-    ...pickIdx(hardIdx,  Math.min(2, hardIdx.length)),
+    ...pickIdx(easyIdx, Math.min(3, easyIdx.length)),
+    ...pickIdx(medIdx,  Math.min(3, medIdx.length)),
+    ...pickIdx(hardIdx, Math.min(1, hardIdx.length)),
   ];
-  quizMeta = selected.map(di => ({ di, raw: generateSecret(TASK_DEFS[di]) }));
+  quizMeta      = selected.map(di => ({ di, raw: generateSecret(TASK_DEFS[di]) }));
   quizQuestions = quizMeta.map(({di, raw}) => buildQuestion(TASK_DEFS[di], raw));
 }
 
 // ── 狀態 ─────────────────────────────────────────────────
-let rubyVM        = null;
-let currentPhase  = 'quiz';
-let questionIndex = 0;
-let correctCount  = 0;
+let rubyVM         = null;
+let currentPhase   = 'quiz';
+let questionIndex  = 0;
+let correctCount   = 0;
 let currentAttempts = 0;
-let playerName    = '';
-let proofTs       = '';
+let playerName     = '';
+let proofTs        = '';
+let selectedLang   = '';
+let crosslangQuestions = [];
+let crosslangIndex    = 0;
+let crosslangAttempts = 0;
+let crosslangIds   = [];
 
 // ── Phase 切換 ────────────────────────────────────────────
 window.switchPhase = function (name) {
-  ['quiz', 'result', 'form', 'proof'].forEach(p => {
-    document.getElementById('phase-' + p).style.display = p === name ? '' : 'none';
+  const allPhases = ['quiz', 'lang-select', 'crosslang', 'result', 'form', 'proof'];
+  allPhases.forEach(p => {
+    const el = document.getElementById('phase-' + p);
+    if (el) el.style.display = (p === name) ? '' : 'none';
   });
+  // progress bar: show during quiz and crosslang only
+  const progressEl = document.getElementById('phase-progress');
+  if (progressEl) progressEl.style.display = (name === 'quiz' || name === 'crosslang') ? '' : 'none';
+
   currentPhase = name;
   window.scrollTo({ top: document.getElementById('challenge').offsetTop - 20, behavior: 'smooth' });
 
   if (name === 'result') renderResult();
+  if (name === 'form')   populateFormPrefills();
   if (name === 'proof')  { renderProof(); clearSavedState(); }
   else saveState();
 };
+
+// ── Form pre-fills ────────────────────────────────────────
+function populateFormPrefills() {
+  const scoreEl = document.getElementById('form-score');
+  const langEl  = document.getElementById('form-lang');
+  if (scoreEl) scoreEl.value = `${correctCount} / ${TOTAL_QUESTIONS}`;
+  if (langEl)  langEl.value  = selectedLang;
+}
 
 // ── 進度條 ────────────────────────────────────────────────
 function updateProgress() {
   const n = questionIndex + 1;
   document.getElementById('progress-text').textContent = tpl(UI.quiz_progress, { n });
   document.getElementById('score-text').textContent    = tpl(UI.quiz_score, { n: correctCount });
-  document.getElementById('progress-fill').style.width = (n / TOTAL_QUESTIONS * 100) + '%';
+  document.getElementById('progress-fill').style.width = (n / STANDARD_QUESTIONS * 100) + '%';
+}
+
+function updateProgressForCrosslang() {
+  const n = crosslangIndex + 1;
+  document.getElementById('progress-text').textContent = tpl(UI.crosslang_progress, { n });
+  document.getElementById('score-text').textContent    = tpl(UI.quiz_score, { n: correctCount });
+  document.getElementById('progress-fill').style.width = (n / CROSSLANG_COUNT * 100) + '%';
 }
 
 // ── 難度 badge ────────────────────────────────────────────
@@ -473,6 +637,34 @@ function renderQuestion(q) {
   setOutput(`<span style="color:#4a3a48;">${UI.quiz_output_waiting}</span>`);
 
   document.getElementById('tips-list').innerHTML = q.tips.map(t => `
+    <div style="background:#fef6f0;border-radius:8px;padding:10px 14px;">
+      <code style="font-family:monospace;font-size:12px;color:#323232;">${t.code}</code>
+      <p style="font-size:11px;color:#9b9b9b;margin:3px 0 0;">${t.desc}</p>
+    </div>
+  `).join('');
+}
+
+// ── crosslang 題目渲染 ────────────────────────────────────
+function renderCrosslangQuestion(q) {
+  const langLabels = { javascript: 'JavaScript', python: 'Python', php: 'PHP' };
+  document.getElementById('crosslang-badge').textContent = `${langLabels[q.sourceLang]} → Ruby`;
+
+  const codeEl = document.getElementById('crosslang-code');
+  codeEl.removeAttribute('data-highlighted');
+  codeEl.className = `language-${q.sourceLang}`;
+  codeEl.textContent = q.code;
+  if (window.hljs) window.hljs.highlightElement(codeEl);
+
+  document.getElementById('crosslang-input').value = '';
+  document.getElementById('crosslang-feedback').style.display = 'none';
+  document.getElementById('crosslang-output').innerHTML =
+    `<span style="color:#4a3a48;">${UI.quiz_output_waiting}</span>`;
+  document.getElementById('crosslang-attempts-badge').textContent = '';
+
+  const statusEl = document.getElementById('crosslang-ruby-status');
+  if (statusEl) statusEl.textContent = rubyVM ? UI.wasm_ready : UI.wasm_not_ready;
+
+  document.getElementById('crosslang-tips-list').innerHTML = q.tips.map(t => `
     <div style="background:#fef6f0;border-radius:8px;padding:10px 14px;">
       <code style="font-family:monospace;font-size:12px;color:#323232;">${t.code}</code>
       <p style="font-size:11px;color:#9b9b9b;margin:3px 0 0;">${t.desc}</p>
@@ -528,11 +720,29 @@ function showAnswerReveal(q) {
     </div>`;
 }
 
-// ── 下一題 / 結束 ─────────────────────────────────────────
+// ── crosslang 回饋 ────────────────────────────────────────
+function showCrosslangFeedback(correct, remaining) {
+  const fp = document.getElementById('crosslang-feedback');
+  fp.style.display = 'block';
+  if (correct) {
+    fp.innerHTML = `<div style="background:#f0faf4;border:1px solid #bbf7d0;border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:12px;"><span style="font-size:24px;">🎉</span><span style="font-size:16px;font-weight:700;color:#15803d;">${UI.feedback_correct}</span></div>`;
+  } else {
+    fp.innerHTML = `<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:12px;"><span style="font-size:20px;">❌</span><span style="font-size:14px;color:#9a3412;">${tpl(UI.feedback_wrong, { n: remaining })}</span></div>`;
+    document.getElementById('crosslang-attempts-badge').textContent = tpl(UI.feedback_attempts_remaining, { n: remaining });
+  }
+}
+
+function showCrosslangAnswerReveal(q) {
+  const fp = document.getElementById('crosslang-feedback');
+  fp.style.display = 'block';
+  fp.innerHTML = `<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:16px 20px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><span style="font-size:18px;">😅</span><span style="font-size:14px;font-weight:700;color:#991b1b;">${UI.feedback_exhausted}</span></div><code style="font-family:monospace;font-size:14px;color:#7f1d1d;background:#fee2e2;border-radius:6px;padding:6px 12px;display:inline-block;">${escHtml(q.answer)}</code></div>`;
+}
+
+// ── 下一題 (quiz) ─────────────────────────────────────────
 function nextQuestion() {
   questionIndex++;
-  if (questionIndex >= quizQuestions.length) {
-    switchPhase('result');
+  if (questionIndex >= STANDARD_QUESTIONS) {
+    switchPhase('lang-select');
   } else {
     currentAttempts = 0;
     updateProgress();
@@ -541,7 +751,40 @@ function nextQuestion() {
   }
 }
 
-// ── 執行 Ruby ─────────────────────────────────────────────
+// ── 下一題 (crosslang) ────────────────────────────────────
+function nextCrosslangQuestion() {
+  crosslangIndex++;
+  if (crosslangIndex >= crosslangQuestions.length) {
+    switchPhase('result');
+  } else {
+    crosslangAttempts = 0;
+    updateProgressForCrosslang();
+    renderCrosslangQuestion(crosslangQuestions[crosslangIndex]);
+  }
+}
+
+// ── 選擇語言 ──────────────────────────────────────────────
+window.selectLang = function (lang) {
+  selectedLang = lang;
+  const pool    = CROSSLANG_DEFS[lang] || [];
+  const shuffled = pool.slice().sort(() => Math.random() - 0.5).slice(0, CROSSLANG_COUNT);
+  crosslangIds       = shuffled.map(def => def.id);
+  crosslangQuestions = shuffled.map(def => ({
+    type:       'crosslang',
+    sourceLang: lang,
+    code:       def.code,
+    expected:   def.expected,
+    answer:     def.answer,
+    tips:       def.tips,
+  }));
+  crosslangIndex    = 0;
+  crosslangAttempts = 0;
+  switchPhase('crosslang');
+  renderCrosslangQuestion(crosslangQuestions[0]);
+  updateProgressForCrosslang();
+};
+
+// ── 執行 Ruby (quiz) ──────────────────────────────────────
 window.runRuby = async function () {
   if (!rubyVM) {
     setOutput(`<span style="color:#febc2e;">${UI.wasm_not_ready}</span>`);
@@ -574,7 +817,6 @@ end
   try {
     result = rubyVM.eval(wrapped).toString();
   } catch (e) {
-    // iOS Safari: "Maximum call stack size exceeded" — retry after a macrotask break
     if (e instanceof RangeError || e.message?.includes('call stack')) {
       try {
         await new Promise(r => setTimeout(r, 50));
@@ -609,6 +851,69 @@ end
       setTimeout(() => nextQuestion(), 3000);
     } else {
       showRetryFeedback(MAX_ATTEMPTS - currentAttempts);
+    }
+  }
+};
+
+// ── 執行 Ruby (crosslang) ─────────────────────────────────
+window.runCrosslang = async function () {
+  if (!rubyVM) {
+    document.getElementById('crosslang-output').innerHTML =
+      `<span style="color:#febc2e;">${UI.wasm_not_ready}</span>`;
+    return;
+  }
+  const input = document.getElementById('crosslang-input').value.trim();
+  if (!input) {
+    document.getElementById('crosslang-output').innerHTML =
+      `<span style="color:#febc2e;">${UI.wasm_no_input}</span>`;
+    return;
+  }
+
+  const q = crosslangQuestions[crosslangIndex];
+  const code = `begin\n${input}\nrescue SyntaxError => e\n"SyntaxError: \#{e.message}"\nrescue => e\n"\#{e.class}: \#{e.message}"\nend`;
+
+  let result;
+  try {
+    result = rubyVM.eval(code).toString();
+  } catch (e) {
+    if (e instanceof RangeError || e.message?.includes('call stack')) {
+      try {
+        await new Promise(r => setTimeout(r, 50));
+        result = rubyVM.eval(code).toString();
+      } catch (e2) {
+        document.getElementById('crosslang-output').innerHTML =
+          `<span style="color:#f87171;">${UI.exec_error_prefix} ${escHtml(e2.message)}</span>`;
+        return;
+      }
+    } else {
+      document.getElementById('crosslang-output').innerHTML =
+        `<span style="color:#f87171;">${UI.exec_error_prefix} ${escHtml(e.message)}</span>`;
+      return;
+    }
+  }
+
+  const isError = result.includes('Error:') || result.includes('SyntaxError');
+  if (isError) {
+    document.getElementById('crosslang-output').innerHTML =
+      `<span style="color:#f87171;">${escHtml(result)}</span>`;
+    return;
+  }
+
+  document.getElementById('crosslang-output').innerHTML =
+    `<span style="color:#4ade80;">=&gt; ${escHtml(result)}</span>`;
+
+  if (result.trim() === q.expected.trim()) {
+    correctCount++;
+    document.getElementById('score-text').textContent = tpl(UI.quiz_score, { n: correctCount });
+    showCrosslangFeedback(true);
+    setTimeout(() => nextCrosslangQuestion(), 1400);
+  } else {
+    crosslangAttempts++;
+    if (crosslangAttempts >= MAX_ATTEMPTS) {
+      showCrosslangAnswerReveal(q);
+      setTimeout(() => nextCrosslangQuestion(), 3000);
+    } else {
+      showCrosslangFeedback(false, MAX_ATTEMPTS - crosslangAttempts);
     }
   }
 };
@@ -656,14 +961,12 @@ function drawScoreCard() {
   const ctx = canvas.getContext('2d');
   const W = 1080, H = 1080;
 
-  // Background gradient
   const grad = ctx.createRadialGradient(W/2, H*0.35, 0, W/2, H/2, W*0.75);
   grad.addColorStop(0, '#d94f40');
   grad.addColorStop(1, '#7a2219');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
-  // Decorative circles
   ctx.globalAlpha = 0.07;
   for (const [cx, cy, r] of [[W*0.1, H*0.1, 260],[W*0.9, H*0.85, 320],[W*0.85, H*0.15, 180]]) {
     ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
@@ -671,54 +974,51 @@ function drawScoreCard() {
   }
   ctx.globalAlpha = 1;
 
-  // SITCON 2026 top label
   ctx.fillStyle = 'rgba(255,255,255,0.65)';
   ctx.font = '500 38px Montserrat, sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText(UI.canvas_top_label, W/2, 100);
 
-  // Logo
   const logo = new Image();
   logo.crossOrigin = 'anonymous';
   logo.src = '{{ "/assets/images/rubytw_logo.png" | relative_url }}';
 
   const drawContent = () => {
-    // Score (big)
     ctx.fillStyle = '#fff';
     ctx.font = `800 220px Montserrat, sans-serif`;
     ctx.textAlign = 'center';
     ctx.fillText(String(correctCount), W/2, H*0.52);
 
-    // "/ 10"
     ctx.fillStyle = 'rgba(255,255,255,0.55)';
     ctx.font = '600 80px Montserrat, sans-serif';
     ctx.fillText('/ 10', W/2, H*0.52 + 90);
 
-    // Stars row
     const stars = '⭐'.repeat(correctCount) + '○'.repeat(10 - correctCount);
     ctx.font = '52px sans-serif';
     ctx.fillStyle = '#fff';
     ctx.fillText(stars.slice(0, 10), W/2, H*0.72);
 
-    // Tagline
     ctx.font = `600 44px ${PAGE_LANG === 'ja' ? '"Noto Sans JP", ' : ''}Montserrat, sans-serif`;
     ctx.fillStyle = '#fff';
     ctx.fillText(UI.canvas_tagline, W/2, H*0.83);
 
-    // @rubytaiwan2008
+    if (selectedLang) {
+      ctx.font = '500 36px Montserrat, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText(`${UI.canvas_lang_prefix} ${selectedLang}`, W/2, H*0.88);
+    }
+
     ctx.font = '500 36px Montserrat, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.fillText(UI.canvas_hashtags, W/2, H*0.9);
+    ctx.fillText(UI.canvas_hashtags, W/2, H*0.92);
   };
 
   logo.onload = () => {
-    // Draw logo above score
     const logoH = 240, logoW = logo.width * (logoH / logo.height);
     ctx.drawImage(logo, W/2 - logoW/2, 130, logoW, logoH);
     drawContent();
   };
   logo.onerror = () => {
-    // Fallback: draw gem emoji
     ctx.font = '180px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('💎', W/2, 360);
@@ -750,8 +1050,8 @@ window.downloadCanvas = function () {
 
 // ── Phase Form: 提交到 listmonk ───────────────────────────
 window.submitForm = async function () {
-  const name   = document.getElementById('form-name').value.trim();
-  const email  = document.getElementById('form-email').value.trim();
+  const name       = document.getElementById('form-name').value.trim();
+  const email      = document.getElementById('form-email').value.trim();
   const phone      = document.getElementById('form-phone').value.trim();
   const school     = document.getElementById('form-school').value.trim();
   const rubyCourse = document.getElementById('form-ruby-course').checked;
@@ -769,19 +1069,22 @@ window.submitForm = async function () {
   btn.textContent = UI.form_submitting;
 
   try {
-      await fetch(SUBMIT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          name,
-          list_uuids: [LISTMONK_LIST_UUID],
-          attribs: { phone, school, ruby_course_interest: rubyCourse, message, score: correctCount, total: TOTAL_QUESTIONS },
-        }),
-      });
-    } catch (e) {
-      console.warn('Form submit error (continuing anyway):', e);
-    }
+    await fetch(SUBMIT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        name,
+        list_uuids: [LISTMONK_LIST_UUID],
+        attribs: {
+          phone, school, ruby_course_interest: rubyCourse, message,
+          score: correctCount, total: TOTAL_QUESTIONS, lang: selectedLang,
+        },
+      }),
+    });
+  } catch (e) {
+    console.warn('Form submit error (continuing anyway):', e);
+  }
 
   switchPhase('proof');
 };
@@ -808,7 +1111,6 @@ function renderProof() {
   document.getElementById('proof-code').textContent  = code;
   document.getElementById('proof-time').textContent  = displayTime;
 
-  // QR Code
   const qrEl = document.getElementById('proof-qrcode');
   qrEl.innerHTML = '';
   try {
@@ -820,7 +1122,6 @@ function renderProof() {
     qrEl.textContent = code;
   }
 
-  // Live clock
   const clockEl = document.getElementById('proof-live-time');
   const tick = () => {
     if (currentPhase !== 'proof') return;
@@ -859,37 +1160,32 @@ async function initRuby() {
   try {
     const { DefaultRubyVM } = window["ruby-wasm-wasi"];
 
-    // Step 1: compile
     statusEl.textContent = UI.wasm_step1;
     let module;
     try {
-      // Preferred: streaming compile (memory-efficient, works on most browsers)
       module = await WebAssembly.compileStreaming(fetch(wasmUrl));
     } catch (_) {
-      // Fallback: fetch as ArrayBuffer then compile
-      // (handles browsers where compileStreaming silently fails)
       statusEl.textContent = UI.wasm_step1_fallback;
       const resp = await fetch(wasmUrl);
       const buf  = await resp.arrayBuffer();
       module = await WebAssembly.compile(buf);
     }
 
-    // Step 2: instantiate Ruby VM
     statusEl.textContent = UI.wasm_step2;
     const { vm } = await DefaultRubyVM(module);
 
     rubyVM = vm;
-    // Warm-up: pre-load stringio to avoid deep call stack on first eval
-    // (workaround for iOS Safari 18.x "Maximum call stack size exceeded")
     try { rubyVM.eval('require "stringio"; require "strscan"'); } catch(_) {}
 
-    // 用 Ruby WASM 算出所有題目的 expected（不再需要 EXPECTED_MAP）
     await computeAllExpected();
     statusEl.textContent = UI.wasm_ready;
     statusEl.style.color = '#16a34a';
     document.getElementById('run-btn').style.opacity = '1';
+
+    // crosslang-ruby-status も更新
+    const clStatus = document.getElementById('crosslang-ruby-status');
+    if (clStatus) { clStatus.textContent = UI.wasm_ready; clStatus.style.color = '#16a34a'; }
   } catch (e) {
-    // Show actual error to aid remote debugging
     const msg = (e && (e.message || String(e))) || 'unknown';
     statusEl.textContent = `${UI.wasm_error_prefix} ${msg.slice(0, 80)}`;
     statusEl.style.color = '#f87171';
@@ -903,28 +1199,55 @@ async function initRuby() {
   try { snap = JSON.parse(sessionStorage.getItem(SAVE_KEY)); } catch (_) {}
 
   if (snap && Array.isArray(snap.meta) && snap.meta.length > 0) {
-    // iOS 等情境 reload 後，從 sessionStorage 還原進度
     prepareQuiz(snap.meta);
     questionIndex   = snap.qi   ?? 0;
     correctCount    = snap.cc   ?? 0;
     currentAttempts = snap.ca   ?? 0;
     playerName      = snap.name ?? '';
     proofTs         = snap.ts   ?? '';
+    selectedLang    = snap.lang ?? '';
     currentPhase    = snap.phase ?? 'quiz';
+
+    // Restore crosslang questions from saved IDs
+    if (selectedLang && Array.isArray(snap.clIds) && snap.clIds.length > 0) {
+      const pool = CROSSLANG_DEFS[selectedLang] || [];
+      const restored = snap.clIds.map(id => pool.find(d => d.id === id)).filter(Boolean);
+      if (restored.length === snap.clIds.length) {
+        crosslangIds       = snap.clIds;
+        crosslangIndex     = snap.cli ?? 0;
+        crosslangQuestions = restored.map(def => ({
+          type: 'crosslang', sourceLang: selectedLang,
+          code: def.code, expected: def.expected,
+          answer: def.answer, tips: def.tips,
+        }));
+      } else {
+        // Can't restore cleanly — fall back to lang-select
+        currentPhase = 'lang-select';
+      }
+    }
   } else {
     prepareQuiz();
   }
 
   updateProgress();
   renderQuestion(quizQuestions[Math.min(questionIndex, quizQuestions.length - 1)]);
-  // switchPhase 會處理 phase 顯示、renderResult/renderProof，以及 saveState
-  switchPhase(currentPhase);
+  if (currentPhase === 'crosslang' && crosslangQuestions.length > 0) {
+    switchPhase('crosslang');
+    renderCrosslangQuestion(crosslangQuestions[Math.min(crosslangIndex, crosslangQuestions.length - 1)]);
+    updateProgressForCrosslang();
+  } else {
+    switchPhase(currentPhase);
+  }
   document.getElementById('run-btn').style.opacity = '0.6';
   initRuby();
 })();
 
 document.getElementById('method-input').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') window.runRuby();
+});
+
+document.getElementById('crosslang-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') window.runCrosslang();
 });
 
 </script>

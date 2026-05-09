@@ -27,6 +27,12 @@
   <script src="{{ '/assets/js/qrcode.min.js' | relative_url }}"></script>
   <!-- Ruby WASM UMD bundle (local asset) -->
   <script src="{{ '/assets/ruby-wasm/browser.umd.js' | relative_url }}"></script>
+  <!-- highlight.js — syntax highlight for crosslang questions -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/php.min.js"></script>
 </head>
 <body style="margin: 0; font-family: {% if page.lang == 'ja' %}'Noto Sans JP', {% endif %}Montserrat, sans-serif;">
   <!-- Language Switcher -->

@@ -8,10 +8,10 @@ date_locale: "en-US"
 # ── Section Header ──
 header_tag: "// RUBY INTERACTIVE ALCHEMY BOOTH CHALLENGE"
 header_title: "Start Learning Ruby Today"
-header_subtitle: "Answer 10 Ruby challenges, run real Ruby code, and claim your gift at the booth!"
+header_subtitle: "7 Ruby basics + 3 cross-language questions — run real Ruby code and claim your gift at the booth!"
 
 # ── Quiz Phase (HTML) ──
-quiz_progress_init: "Q 1 / 10"
+quiz_progress_init: "Q 1 / 7"
 quiz_score_init: "⭐ 0 correct"
 quiz_loading: "Loading…"
 quiz_input_placeholder: ".method_name"
@@ -25,7 +25,8 @@ quiz_powered_by_desc: "Real Ruby 4.0 running in your browser"
 quiz_output_waiting: "Waiting for output…"
 
 # ── Quiz Phase (JS dynamic) ──
-quiz_progress: "Q {n} / 10"
+quiz_progress: "Q {n} / 7"
+crosslang_progress: "Cross-lang {n} / 3"
 quiz_score: "⭐ {n} correct"
 diff_easy: "Easy"
 diff_medium: "Medium"
@@ -104,6 +105,25 @@ ai_prompt_question_label: "[Question] "
 ai_prompt_code_label: "[Current Code]"
 ai_prompt_code_comment: "# ??? is the Ruby method I need to fill in"
 ai_prompt_instruction: "Please start by asking about my initial thoughts, then give progressive hints as needed, and only confirm the answer once you're sure I've truly understood."
+
+# ── Lang Select Phase ──
+lang_select_title: "What's your main language?"
+lang_select_subtitle: "Next 3 questions: see code in your language, write the Ruby equivalent"
+lang_select_js: "JavaScript"
+lang_select_py: "Python"
+lang_select_php: "PHP"
+
+# ── Crosslang Phase ──
+crosslang_prompt: "Write the Ruby equivalent:"
+crosslang_input_placeholder: "Ruby expression"
+crosslang_badge: "Cross-lang Challenge"
+
+# ── Form additions ──
+form_score_label: "Your Score"
+form_lang_label: "Your Language"
+
+# ── Canvas additions ──
+canvas_lang_prefix: "from"
 
 # ── Language Switcher ──
 lang_switcher_zh: "中文"

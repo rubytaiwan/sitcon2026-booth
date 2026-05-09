@@ -1,0 +1,34 @@
+- id: php_sum
+  code: "array_sum([1, 2, 3, 4, 5])\n// => 15"
+  expected: "15"
+  answer: "[1, 2, 3, 4, 5].sum"
+  tips:
+    - { code: "Array#sum", desc: "所有元素加總" }
+
+- id: php_upcase
+  code: "strtoupper(\"hello\")\n// => \"HELLO\""
+  expected: "HELLO"
+  answer: '"hello".upcase'
+  tips:
+    - { code: "String#upcase", desc: "轉大寫" }
+
+- id: php_join
+  code: "implode(\", \", [\"apple\", \"banana\", \"cherry\"])\n// => \"apple, banana, cherry\""
+  expected: "apple, banana, cherry"
+  answer: '["apple", "banana", "cherry"].join(", ")'
+  tips:
+    - { code: "Array#join", desc: "陣列合併成字串" }
+
+- id: php_count_gt
+  code: "count(array_filter([1,2,3,4,5], fn($n) => $n > 2))\n// => 3"
+  expected: "3"
+  answer: "[1, 2, 3, 4, 5].count { |n| n > 2 }"
+  tips:
+    - { code: "Array#count { |n| ... }", desc: "計算符合條件的元素數量" }
+
+- id: php_repeat
+  code: "str_repeat(\"ab\", 3)\n// => \"ababab\""
+  expected: "ababab"
+  answer: '"ab" * 3'
+  tips:
+    - { code: "String * n", desc: "字串重複 n 次" }
